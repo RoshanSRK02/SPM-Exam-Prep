@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="description" content="Offline-first MCQ revision app with default sets, filters, charts, bookmarks, and daily quiz." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Revision MCQ" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icons/icon.svg" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Revision MCQ</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Revision platform</p>
+          <h1>MCQ Study PWA</h1>
+        </div>
+        <div class="topbar-actions">
+          <button id="themeToggle" class="secondary-btn" type="button" aria-label="Toggle dark mode">Dark mode</button>
+          <button id="installButton" class="primary-btn hidden" type="button" aria-label="Install app">Install app</button>
+        </div>
+      </header>
+
+      <section class="toolbar card" aria-label="Question filters">
+        <div class="field-group">
+          <label for="questionSearch">Search</label>
+          <input id="questionSearch" type="search" placeholder="Search questions, subchapters, explanations..." />
+        </div>
+        <div class="field-group">
+          <label for="lectureFilter">Lecture</label>
+          <select id="lectureFilter"><option value="all">All lectures</option></select>
+        </div>
+        <div class="field-group">
+          <label for="difficultyFilter">Difficulty</label>
+          <select id="difficultyFilter">
+            <option value="all">All levels</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="typeFilter">Type</label>
+          <select id="typeFilter">
+            <option value="all">All types</option>
+            <option value="single-select">Single select</option>
+            <option value="multi-select">Multi select</option>
+            <option value="true-false">True / False</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="priorityFilter">Exam priority</label>
+          <select id="priorityFilter">
+            <option value="all">All</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label for="subchapterFilter">Subchapter</label>
+          <select id="subchapterFilter"><option value="all">All subchapters</option></select>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Question counts">
+        <div class="stat-card card">
+          <span class="stat-label">Loaded</span>
+          <strong id="totalQuestions">0</strong>
+        </div>
+        <div class="stat-card card">
+          <span class="stat-label">Filtered</span>
+          <strong id="filteredQuestions">0</strong>
+        </div>
+        <div class="stat-card card">
+          <span class="stat-label">Mode</span>
+          <strong id="activeMode">Revision</strong>
+        </div>
+        <div class="stat-card card">
+          <span class="stat-label">Daily Quiz</span>
+          <strong id="dailyQuizCount">20</strong>
+        </div>
+      </section>
+
+      <section class="mode-actions card" aria-label="Quiz modes">
+        <div class="segmented-control" role="tablist" aria-label="Quiz mode selector">
+          <button class="mode-btn active" data-mode="revision" type="button">Revision mode</button>
+          <button class="mode-btn" data-mode="exam" type="button">Exam mode</button>
+        </div>
+        <div class="action-row">
+          <button id="startQuizBtn" class="primary-btn" type="button">Start quiz</button>
+          <button id="dailyQuizBtn" class="secondary-btn" type="button">Daily quiz</button>
+          <button id="resetFiltersBtn" class="ghost-btn" type="button">Reset filters</button>
+        </div>
+      </section>
+
+      <section class="set-selector card" aria-label="Default question sets">
+        <h2>Default question sets</h2>
+        <div class="set-actions">
+          <button class="set-btn active" data-set="A" type="button">Set A</button>
+          <button class="set-btn" data-set="B" type="button">Set B</button>
+          <button class="set-btn" data-set="C" type="button">Set C</button>
+        </div>
+      </section>
+
+      <main class="main-layout">
+        <section class="quiz-panel card" aria-live="polite">
+          <div class="question-header">
+            <span id="questionMeta">No question selected</span>
+            <span id="questionCounter">0 / 0</span>
+          </div>
+          <div id="questionCard" class="question-card"></div>
+          <div id="quizActions" class="quiz-actions hidden">
+            <button id="showAnswerBtn" class="secondary-btn hidden" type="button">Show Answer</button>
+            <button id="prevQuestionBtn" class="secondary-btn" type="button">Previous</button>
+            <button id="nextQuestionBtn" class="primary-btn" type="button">Next</button>
+            <button id="submitQuizBtn" class="confirm-btn" type="button">Submit</button>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <section class="card sidebar-block" aria-label="Lecture performance">
+            <h2>Lecture performance</h2>
+            <div id="performanceList" class="performance-list"></div>
+          </section>
+
+          <section class="card sidebar-block" aria-label="Lecture chart">
+            <h2>Lecture chart</h2>
+            <div id="lectureChart" class="lecture-chart"></div>
+          </section>
+
+          <section class="card sidebar-block" aria-label="Bookmarks">
+            <h2>Bookmarks</h2>
+            <ul id="bookmarkList" class="compact-list"></ul>
+          </section>
+
+          <section class="card sidebar-block" aria-label="Incorrect questions">
+            <h2>Incorrect</h2>
+            <ul id="incorrectList" class="compact-list"></ul>
+          </section>
+
+          <section class="card sidebar-block" aria-label="Recent results">
+            <h2>Recent results</h2>
+            <ul id="resultHistory" class="result-history"></ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
