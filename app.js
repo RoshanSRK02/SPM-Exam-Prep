@@ -1,6 +1,18 @@
 const QUESTION_BANK_URL = './question_bank.json';
+const MODULES = {
+  'managing-software-projects': {
+    label: 'Managing Software Projects',
+    file: './question_bank.json',
+  },
+  'human-resources-quality-management': {
+    label: 'Human Resources and Quality Management',
+    file: './HR questions.json',
+  },
+};
+
 const STORAGE_KEYS = {
   theme: 'revision-mcq-theme',
+  module: 'revision-mcq-module',
   mode: 'revision-mcq-mode',
   filters: 'revision-mcq-filters',
   history: 'revision-mcq-history',
@@ -17,6 +29,8 @@ const state = {
   currentQuestionIndex: 0,
   activeSet: 'A',
   totalQuestions: 0,
+  moduleId: 'managing-software-projects',
+  moduleLabel: MODULES['managing-software-projects'].label,
   mode: 'revision',
   theme: 'light',
   filters: {
@@ -94,7 +108,7 @@ function buildDefaultSets(questions) {
     countsByLecture[lectureId] = questions.filter((question) => question.lecture === lectureId).length;
   });
 
-  const targetSize = 60;
+  const targetSize = Math.min(60, questions.length);
   const sets = { A: [], B: [], C: [] };
   const allocations = { A: {}, B: {}, C: {} };
 
@@ -142,17 +156,33 @@ function buildDefaultSets(questions) {
 }
 
 const DataLayer = {
-  async loadQuestionBank() {
-    const response = await fetch(QUESTION_BANK_URL, { cache: 'force-cache' });
-    if (!response.ok) throw new Error('Unable to load question_bank.json');
+  async loadQuestionBank(moduleId = state.moduleId) {
+    const moduleKey = MODULES[moduleId] ? moduleId : 'managing-software-projects';
+    const moduleConfig = MODULES[moduleKey];
+    const response = await fetch(moduleConfig.file, { cache: 'force-cache' });
+    if (!response.ok) throw new Error(`Unable to load ${moduleConfig.file}`);
 
     const payload = await response.json();
     const questions = Array.isArray(payload.questions) ? payload.questions.map(normalizeQuestion) : [];
+    state.moduleId = moduleKey;
+    state.moduleLabel = moduleConfig.label;
     state.allQuestions = questions;
     state.totalQuestions = questions.length;
     state.defaultSets = buildDefaultSets(questions);
-    state.filteredQuestions = [...state.defaultSets.A];
+    state.filteredQuestions = [...(state.defaultSets.A || [])];
+    state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
+    FilterEngine.reset();
     return questions;
+  },
+
+  async switchModule(moduleId) {
+    await DataLayer.loadQuestionBank(moduleId);
+    populateFilters();
+    updateModuleButtons();
+    loadDefaultSet('A');
+    ResultsEngine.renderAll();
+    renderSummaryStats();
+    ReviewEngine.renderQuestion();
   },
 
   getQuestionById(id) {
@@ -176,6 +206,11 @@ const StorageManager = {
 
   loadState() {
     state.theme = StorageManager.loadObject(STORAGE_KEYS.theme, 'light');
+    state.moduleId = StorageManager.loadObject(STORAGE_KEYS.module, state.moduleId);
+    if (!MODULES[state.moduleId]) {
+      state.moduleId = 'managing-software-projects';
+    }
+    state.moduleLabel = MODULES[state.moduleId].label;
     state.mode = StorageManager.loadObject(STORAGE_KEYS.mode, 'revision');
     state.filters = { ...state.filters, ...StorageManager.loadObject(STORAGE_KEYS.filters, state.filters) };
     state.history = StorageManager.loadObject(STORAGE_KEYS.history, []);
@@ -186,6 +221,7 @@ const StorageManager = {
 
   saveState() {
     StorageManager.saveObject(STORAGE_KEYS.theme, state.theme);
+    StorageManager.saveObject(STORAGE_KEYS.module, state.moduleId);
     StorageManager.saveObject(STORAGE_KEYS.mode, state.mode);
     StorageManager.saveObject(STORAGE_KEYS.filters, state.filters);
     StorageManager.saveObject(STORAGE_KEYS.history, state.history);
@@ -700,6 +736,12 @@ function renderSummaryStats() {
   elements.dailyQuizCount.textContent = '20';
 }
 
+function updateModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((button) => {
+    button.classList.toggle('active', button.dataset.module === state.moduleId);
+  });
+}
+
 function applyFilters() {
   state.filters = {
     search: elements.questionSearch.value.trim(),
@@ -729,6 +771,14 @@ function loadDefaultSet(setName) {
 }
 
 function bindEvents() {
+  document.querySelectorAll('.module-btn').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const selectedModule = button.dataset.module || state.moduleId;
+      if (selectedModule === state.moduleId) return;
+      await DataLayer.switchModule(selectedModule);
+    });
+  });
+
   elements.questionSearch.addEventListener('input', () => {
     applyFilters();
     ResultsEngine.renderAll();
@@ -855,7 +905,8 @@ async function initializeApp() {
   PwaManager.setupInstallPrompt();
 
   try {
-    await DataLayer.loadQuestionBank();
+    updateModuleButtons();
+    await DataLayer.loadQuestionBank(state.moduleId);
     populateFilters();
     loadDefaultSet('A');
     bindEvents();

@@ -1,14 +1,14 @@
 # Code Map
 
 ## Project purpose
-This repository is a Progressive Web App (PWA) for MCQ revision. It loads a large question bank, lets the user filter and study questions, tracks performance, supports offline use, and offers daily/exam-style quiz flows.
+This repository is a Progressive Web App (PWA) for MCQ revision. It loads a selected module question bank, lets the user filter and study questions, tracks performance, supports offline use, and offers daily/exam-style quiz flows. The app now supports module selection before filtering and generates 60-question default sets for each module, including HR.
 
 ## High-level architecture
 - Frontend UI: static HTML, CSS, and vanilla JavaScript
-- Data layer: local JSON question bank loaded through `fetch()`
+- Data layer: module-specific JSON files loaded through `fetch()`
 - Runtime state: in-memory state object plus browser `localStorage`
 - Offline support: service worker caches the app shell and key assets
-- UX model: revision mode, exam mode, filters, default sets, bookmarks, incorrect list, and historical results
+- UX model: module selection, revision mode, exam mode, filters, default sets, bookmarks, incorrect list, and historical results
 
 ## Core files
 
@@ -37,8 +37,12 @@ This repository is a Progressive Web App (PWA) for MCQ revision. It loads a larg
 - defines app name, icons, theme, and display mode
 
 ### `question_bank.json`
-- Source dataset for all MCQ content
+- Source dataset for the Managing Software Projects module
 - Each question includes metadata such as lecture, subchapter, difficulty, type, answers, explanation, and hint
+
+### `HR questions.json`
+- Source dataset for the Human Resources and Quality Management module
+- Structured similarly to the main bank so it can be loaded through the same app logic
 
 ### `raw_questions.txt`
 - Raw source text likely used to generate or maintain the question bank
@@ -48,9 +52,11 @@ This repository is a Progressive Web App (PWA) for MCQ revision. It loads a larg
 
 ## State and data model
 The app uses a central `state` object with these main buckets:
-- `allQuestions`: full normalized dataset
+- `moduleId`: selected module key, such as `managing-software-projects` or `human-resources-quality-management`
+- `moduleLabel`: user-facing name for the current module
+- `allQuestions`: full normalized dataset for the active module
 - `filteredQuestions`: currently visible questions after filters
-- `defaultSets`: generated sets A/B/C for structured revision
+- `defaultSets`: generated sets A/B/C for structured revision; each module generates its own 60-question default set set
 - `currentSession`: active quiz or session state
 - `currentQuestionIndex`: pointer within the active session
 - `activeSet`: selected default set
@@ -58,24 +64,28 @@ The app uses a central `state` object with these main buckets:
 - `performance`, `history`, `bookmarks`, `incorrect`: persistent user progress data
 
 ## Data flow
-1. `DataLayer.loadQuestionBank()` fetches `question_bank.json`.
-2. Each item is normalized through `normalizeQuestion()`.
-3. `buildDefaultSets()` creates predefined A/B/C distributions by lecture.
-4. Search and filter logic is applied through `SearchEngine` and `FilterEngine`.
-5. The UI renders and updates question cards, stats, and sidebar summaries.
-6. User interactions record progress into `localStorage` through `StorageManager`.
-7. `initializeApp()` orchestrates startup, persistence restore, service worker registration, install prompt setup, and default-set loading.
+1. `StorageManager.loadState()` restores the selected module and saved app settings.
+2. `DataLayer.loadQuestionBank(moduleId)` fetches the active module file.
+3. Each item is normalized through `normalizeQuestion()`.
+4. `buildDefaultSets()` creates predefined A/B/C distributions by lecture, with a 60-question target per set when enough questions exist.
+5. Search and filter logic is applied through `SearchEngine` and `FilterEngine`.
+6. The UI renders and updates question cards, stats, and sidebar summaries.
+7. User interactions record progress into `localStorage` through `StorageManager`.
+8. `initializeApp()` orchestrates startup, persistence restore, service worker registration, install prompt setup, module selection wiring, and default-set loading.
 
 ## Startup and lifecycle
 ### App bootstrap
 `initializeApp()` runs on `DOMContentLoaded` and performs the following:
 - captures all main DOM elements into the `elements` registry
-- restores saved theme, mode, filters, history, performance, bookmarks, and incorrect data
+- restores saved theme, selected module, mode, filters, history, performance, bookmarks, and incorrect data
 - applies the stored theme immediately
 - clears stale service worker caches and registers the service worker
 - sets up the browser install prompt UI
-- loads the question bank, populates filters, loads the default Set A, and binds UI events
+- loads the selected module bank, populates filters, loads the default Set A, and binds UI events
 - renders the summary and initial question view
+
+### Module selection flow
+The UI now includes a dedicated module chooser before the filter toolbar. It uses the `MODULES` registry defined in `app.js` to map module IDs to labels and file paths. Switching modules triggers a reload of the corresponding dataset, repopulates filters, and rebuilds the default A/B/C sets.
 
 ### PWA install flow
 `PwaManager` handles installation and cache refresh:
@@ -94,6 +104,8 @@ The live app flow is session-based and managed by `QuizEngine` and `ReviewEngine
 
 ### Question normalization and loading
 - `normalizeQuestion()` standardizes question structure
+- `MODULES` maps module IDs to module labels and JSON files
+- `DataLayer.loadQuestionBank(moduleId)` loads the active module bank and resets state for that module
 - `hashString()` supports deterministic set generation
 - `shuffleOptions()` randomizes option ordering
 
@@ -115,8 +127,9 @@ The application is structured around session-based quiz rendering and result rec
 ## Key workflows
 
 ### Study flow
-- User selects a default set or filter combination
-- App computes matching questions
+- User selects a module
+- User selects a default set or filter combination within that module
+- App computes matching questions for the chosen module
 - User advances through question cards
 - Explanation and answer summary appear after selection or submission
 
@@ -150,4 +163,4 @@ When feature work or bug fixes are requested:
 4. Keep the map aligned with the actual current implementation.
 
 ## Current status
-This map has been refreshed to match the current repository implementation, including startup bootstrap, PWA install lifecycle, persistent state restore, and quiz-session behavior. It should still be updated whenever the app architecture changes.
+This map has been refreshed to match the current repository implementation, including module selection, multi-bank loading, per-module 60-question default sets, startup bootstrap, PWA install lifecycle, persistent state restore, and quiz-session behavior. HR content is now treated as a separate module with the same default-set mechanism as the main project management bank. It should still be updated whenever the app architecture changes.

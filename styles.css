@@ -53,12 +53,13 @@ input:focus, select:focus { outline: 2px solid rgba(59, 130, 246, 0.35); border-
 .stat-card { padding: 18px 14px; display: flex; flex-direction: column; gap: 8px; }
 .stat-label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; }
 .stat-card strong { font-size: 1.5rem; }
-.mode-actions, .set-selector { padding: 14px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
-.set-selector h2 { margin: 0; font-size: 1rem; }
+.mode-actions, .set-selector, .module-selector { padding: 14px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.set-selector h2, .module-header h2 { margin: 0; font-size: 1rem; }
+.module-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .segmented-control { background: var(--panel); border-radius: 12px; padding: 6px; }
-.mode-btn, .set-btn, .primary-btn, .secondary-btn, .ghost-btn, .confirm-btn { border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s ease, opacity 0.2s ease; padding: 0.8rem 1rem; font-weight: 600; }
-.mode-btn, .set-btn { background: transparent; color: var(--muted); }
-.mode-btn.active, .set-btn.active { background: var(--bg-elevated); color: var(--text); box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1); }
+.mode-btn, .set-btn, .module-btn, .primary-btn, .secondary-btn, .ghost-btn, .confirm-btn { border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s ease, opacity 0.2s ease; padding: 0.8rem 1rem; font-weight: 600; }
+.mode-btn, .set-btn, .module-btn { background: transparent; color: var(--muted); }
+.mode-btn.active, .set-btn.active, .module-btn.active { background: var(--bg-elevated); color: var(--text); box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1); }
 .primary-btn { background: linear-gradient(135deg, var(--primary), var(--primary-strong)); color: white; }
 .secondary-btn { background: rgba(59, 130, 246, 0.1); color: var(--text); }
 .confirm-btn { background: linear-gradient(135deg, var(--accent), #14b8a6); color: white; }
