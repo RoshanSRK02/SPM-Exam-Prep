@@ -1,10 +1,11 @@
-const CACHE_NAME = 'revision-mcq-v3.2';
+const CACHE_NAME = 'revision-mcq-v3.3';
 const OFFLINE_ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
   './question_bank.json',
+  './HR questions.json',
   './manifest.json',
   './icons/icon.svg',
   './icons/icon-maskable.svg',
