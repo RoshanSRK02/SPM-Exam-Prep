@@ -55,10 +55,11 @@ input:focus, select:focus { outline: 2px solid rgba(59, 130, 246, 0.35); border-
 .stat-card strong { font-size: 1.5rem; }
 .mode-actions, .set-selector, .module-selector { padding: 14px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .set-selector h2, .module-header h2 { margin: 0; font-size: 1rem; }
-.module-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.module-actions { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; }
 .segmented-control { background: var(--panel); border-radius: 12px; padding: 6px; }
 .mode-btn, .set-btn, .module-btn, .primary-btn, .secondary-btn, .ghost-btn, .confirm-btn { border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s ease, opacity 0.2s ease; padding: 0.8rem 1rem; font-weight: 600; }
 .mode-btn, .set-btn, .module-btn { background: transparent; color: var(--muted); }
+.module-btn { flex: 1 1 100%; text-align: left; background: var(--panel); border: 1px solid var(--border); }
 .mode-btn.active, .set-btn.active, .module-btn.active { background: var(--bg-elevated); color: var(--text); box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1); }
 .primary-btn { background: linear-gradient(135deg, var(--primary), var(--primary-strong)); color: white; }
 .secondary-btn { background: rgba(59, 130, 246, 0.1); color: var(--text); }
@@ -98,4 +99,10 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .chart-bar-wrap { flex: 1; height: 18px; background: var(--panel); border-radius: 999px; overflow: hidden; border: 1px solid var(--border); }
 .chart-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
 .hidden { display: none !important; }
-@media (max-width: 768px) { .main-layout { grid-template-columns: 1fr; } .topbar, .mode-actions, .set-selector { align-items: flex-start; flex-direction: column; } .question-header { flex-direction: column; align-items: flex-start; } }
+@media (max-width: 768px) {
+  .main-layout { grid-template-columns: 1fr; }
+  .topbar, .mode-actions, .set-selector, .module-selector { align-items: flex-start; flex-direction: column; }
+  .module-actions { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .module-btn { width: 100%; text-align: left; }
+  .question-header { flex-direction: column; align-items: flex-start; }
+}
