@@ -102,54 +102,69 @@ function normalizeQuestion(question) {
 function buildDefaultSets(questions) {
   if (!questions.length) return { A: [], B: [], C: [] };
 
-  const lectureIds = [...new Set(questions.map((question) => question.lecture))].sort((a, b) => a - b);
-  const countsByLecture = {};
-  lectureIds.forEach((lectureId) => {
-    countsByLecture[lectureId] = questions.filter((question) => question.lecture === lectureId).length;
-  });
-
-  const targetSize = Math.min(60, questions.length);
   const sets = { A: [], B: [], C: [] };
-  const allocations = { A: {}, B: {}, C: {} };
+  const setNames = ['A', 'B', 'C'];
+  const remainingQuestions = [...questions];
 
-  ['A', 'B', 'C'].forEach((setName) => {
-    let remaining = targetSize;
+  setNames.forEach((setName, index) => {
+    const totalRemaining = remainingQuestions.length;
+    const remainingSets = setNames.length - index;
+    let targetSize;
+
+    if (totalRemaining <= 180) {
+      const base = Math.floor(totalRemaining / remainingSets);
+      const remainder = totalRemaining % remainingSets;
+      targetSize = base + (index < remainder ? 1 : 0);
+    } else {
+      targetSize = Math.min(60, totalRemaining);
+    }
+
+    const lectureIds = [...new Set(remainingQuestions.map((question) => question.lecture))].sort((a, b) => a - b);
+    const countsByLecture = {};
     lectureIds.forEach((lectureId) => {
-      const share = (countsByLecture[lectureId] / questions.length) * targetSize;
-      allocations[setName][lectureId] = Math.floor(share);
-      remaining -= allocations[setName][lectureId];
+      countsByLecture[lectureId] = remainingQuestions.filter((question) => question.lecture === lectureId).length;
+    });
+
+    const allocations = {};
+    let remainingSlots = targetSize;
+    lectureIds.forEach((lectureId) => {
+      const share = (countsByLecture[lectureId] / totalRemaining) * targetSize;
+      allocations[lectureId] = Math.floor(share);
+      remainingSlots -= allocations[lectureId];
     });
 
     const fractional = lectureIds
       .map((lectureId) => ({
         lectureId,
-        remainder: (countsByLecture[lectureId] / questions.length) * targetSize - (allocations[setName][lectureId] || 0),
+        remainder: (countsByLecture[lectureId] / totalRemaining) * targetSize - (allocations[lectureId] || 0),
       }))
       .sort((a, b) => b.remainder - a.remainder || a.lectureId - b.lectureId);
 
-    for (let index = 0; index < remaining; index += 1) {
-      const lectureId = fractional[index % fractional.length].lectureId;
-      allocations[setName][lectureId] += 1;
+    for (let slotIndex = 0; slotIndex < remainingSlots; slotIndex += 1) {
+      const lectureId = fractional[slotIndex % fractional.length].lectureId;
+      allocations[lectureId] += 1;
     }
 
-    const usedIds = new Set();
     lectureIds.forEach((lectureId) => {
-      const lectureQuestions = questions
+      const lectureQuestions = remainingQuestions
         .filter((question) => question.lecture === lectureId)
         .slice()
         .sort((left, right) => hashString(`${left.id}|${setName}|${lectureId}`) - hashString(`${right.id}|${setName}|${lectureId}`));
 
-      const takeCount = allocations[setName][lectureId] || 0;
-      for (let index = 0; index < takeCount && index < lectureQuestions.length; index += 1) {
-        const question = lectureQuestions[index];
-        if (!usedIds.has(question.id)) {
-          usedIds.add(question.id);
-          sets[setName].push(question);
-        }
+      const takeCount = allocations[lectureId] || 0;
+      for (let questionIndex = 0; questionIndex < takeCount && questionIndex < lectureQuestions.length; questionIndex += 1) {
+        const question = lectureQuestions[questionIndex];
+        sets[setName].push(question);
       }
     });
 
     sets[setName] = sets[setName].slice(0, targetSize);
+    const idsToRemove = new Set(sets[setName].map((question) => question.id));
+    for (let questionIndex = remainingQuestions.length - 1; questionIndex >= 0; questionIndex -= 1) {
+      if (idsToRemove.has(remainingQuestions[questionIndex].id)) {
+        remainingQuestions.splice(questionIndex, 1);
+      }
+    }
   });
 
   return sets;
