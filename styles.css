@@ -56,10 +56,12 @@ input:focus, select:focus { outline: 2px solid rgba(59, 130, 246, 0.35); border-
 .mode-actions, .set-selector, .module-selector { padding: 14px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
 .set-selector h2, .module-header h2 { margin: 0; font-size: 1rem; }
 .module-actions { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.set-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; width: 100%; background: var(--panel); border-radius: 12px; padding: 6px; }
 .segmented-control { background: var(--panel); border-radius: 12px; padding: 6px; }
-.mode-btn, .set-btn, .module-btn, .primary-btn, .secondary-btn, .ghost-btn, .confirm-btn { border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s ease, opacity 0.2s ease; padding: 0.8rem 1rem; font-weight: 600; }
+.mode-btn, .set-btn, .module-btn, .primary-btn, .secondary-btn, .ghost-btn, .confirm-btn { border: none; border-radius: 10px; cursor: pointer; transition: transform 0.15s ease, opacity 0.2s ease; padding: 0.8rem 1rem; font-weight: 600; touch-action: manipulation; }
 .mode-btn, .set-btn, .module-btn { background: transparent; color: var(--muted); }
 .module-btn { flex: 1 1 0; min-width: 180px; text-align: center; }
+.set-btn { min-height: 46px; }
 .mode-btn.active, .set-btn.active, .module-btn.active { background: var(--bg-elevated); color: var(--text); box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1); }
 .primary-btn { background: linear-gradient(135deg, var(--primary), var(--primary-strong)); color: white; }
 .secondary-btn { background: rgba(59, 130, 246, 0.1); color: var(--text); }
@@ -102,7 +104,7 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 @media (max-width: 768px) {
   .main-layout { grid-template-columns: 1fr; }
   .topbar, .mode-actions, .set-selector, .module-selector { align-items: flex-start; flex-direction: column; }
-  .module-actions { display: grid; grid-template-columns: 1fr; width: 100%; }
-  .module-btn { width: 100%; min-width: 0; text-align: center; }
+  .module-actions, .set-actions { display: grid; grid-template-columns: 1fr; width: 100%; }
+  .module-btn, .set-btn { width: 100%; min-width: 0; text-align: center; }
   .question-header { flex-direction: column; align-items: flex-start; }
 }

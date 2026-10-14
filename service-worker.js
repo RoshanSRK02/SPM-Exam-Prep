@@ -1,4 +1,4 @@
-const CACHE_NAME = 'revision-mcq-v3.5';
+const CACHE_NAME = 'revision-mcq-v3.6';
 const OFFLINE_ASSETS = [
   './',
   './index.html',
