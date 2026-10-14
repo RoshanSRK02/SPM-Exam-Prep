@@ -1,7 +1,7 @@
 # Code Map
 
 ## Project purpose
-This repository is a Progressive Web App (PWA) for MCQ revision. It loads a selected module question bank, lets the user filter and study questions, tracks performance, supports offline use, and offers daily/exam-style quiz flows. The app now supports module selection before filtering and generates 60-question default sets for each module, including HR.
+This repository is a Progressive Web App (PWA) for MCQ revision. It loads a selected module question bank, lets the user filter and study questions, tracks performance, supports offline use, and offers daily/exam-style quiz flows. The app supports module selection before filtering, generates 60-question default sets for each module, and also offers an All Questions option for a full module review.
 
 ## High-level architecture
 - Frontend UI: static HTML, CSS, and vanilla JavaScript
@@ -56,10 +56,10 @@ The app uses a central `state` object with these main buckets:
 - `moduleLabel`: user-facing name for the current module
 - `allQuestions`: full normalized dataset for the active module
 - `filteredQuestions`: currently visible questions after filters
-- `defaultSets`: generated sets A/B/C for structured revision; each module generates its own 60-question default set set
+- `defaultSets`: generated sets A/B/C for structured revision, plus `all` for the full module question bank
 - `currentSession`: active quiz or session state
 - `currentQuestionIndex`: pointer within the active session
-- `activeSet`: selected default set
+- `activeSet`: selected default set or full-module option
 - `filters`: search and attribute filters
 - `performance`, `history`, `bookmarks`, `incorrect`: persistent user progress data
 
@@ -128,7 +128,7 @@ The application is structured around session-based quiz rendering and result rec
 
 ### Study flow
 - User selects a module
-- User selects a default set or filter combination within that module
+- User selects a default set or the full-module option within that module
 - App computes matching questions for the chosen module
 - User advances through question cards
 - Explanation and answer summary appear after selection or submission
@@ -163,4 +163,4 @@ When feature work or bug fixes are requested:
 4. Keep the map aligned with the actual current implementation.
 
 ## Current status
-This map has been refreshed to match the current repository implementation, including module selection, multi-bank loading, per-module 60-question default sets, startup bootstrap, PWA install lifecycle, persistent state restore, and quiz-session behavior. HR content is now treated as a separate module with the same default-set mechanism as the main project management bank. It should still be updated whenever the app architecture changes.
+This map has been refreshed to match the current repository implementation, including module selection, multi-bank loading, per-module 60-question default sets, the All Questions full-bank option, startup bootstrap, PWA install lifecycle, persistent state restore, and quiz-session behavior. HR content is now treated as a separate module with the same default-set mechanism as the main project management bank, plus an option to revise the full module question list. It should still be updated whenever the app architecture changes.

@@ -184,6 +184,7 @@ const DataLayer = {
     state.allQuestions = questions;
     state.totalQuestions = questions.length;
     state.defaultSets = buildDefaultSets(questions);
+    state.defaultSets.all = [...questions];
     state.filteredQuestions = [...(state.defaultSets.A || [])];
     state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
     FilterEngine.reset();
@@ -602,7 +603,7 @@ const QuizEngine = {
 
   startQuiz(questions = state.filteredQuestions) {
     if (!questions.length) return;
-    const selected = questions.slice(0, 60);
+    const selected = state.activeSet === 'all' ? questions : questions.slice(0, 60);
     QuizEngine.createSession(selected, state.mode);
     elements.quizActions.classList.remove('hidden');
     ReviewEngine.renderQuestion();
@@ -671,7 +672,7 @@ const QuizEngine = {
 
     const percentage = session.questions.length ? Math.round((correct / session.questions.length) * 100) : 0;
     state.history.unshift({
-      title: session.questions.length === 20 ? 'Daily Quiz' : `Set ${state.activeSet}`,
+      title: session.questions.length === 20 ? 'Daily Quiz' : `${state.activeSet === 'all' ? 'All questions' : `Set ${state.activeSet}`}`,
       date: new Date().toLocaleDateString(undefined, { dateStyle: 'medium' }),
       score: percentage,
     });
@@ -774,9 +775,9 @@ function applyFilters() {
 }
 
 function loadDefaultSet(setName) {
-  const normalized = ['A', 'B', 'C'].includes(setName) ? setName : 'A';
+  const normalized = ['A', 'B', 'C', 'all'].includes(setName) ? setName : 'A';
   state.activeSet = normalized;
-  state.filteredQuestions = [...state.defaultSets[normalized]];
+  state.filteredQuestions = [...(state.defaultSets[normalized] || [])];
   state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
   populateFilters();
   document.querySelectorAll('.set-btn').forEach((button) => button.classList.toggle('active', button.dataset.set === normalized));
@@ -835,7 +836,7 @@ function bindEvents() {
   elements.resetFiltersBtn.addEventListener('click', () => {
     state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
     populateFilters();
-    state.filteredQuestions = [...state.defaultSets[state.activeSet] || []];
+    state.filteredQuestions = [...(state.defaultSets[state.activeSet] || [])];
     renderSummaryStats();
     ResultsEngine.renderAll();
     StorageManager.saveState();
