@@ -168,7 +168,13 @@ function buildDefaultSets(questions) {
   });
 
   const testSubchapters = new Set(['Similar to Test Questions', 'Past Test Questions']);
-  sets.testQuestions = questions.filter((question) => testSubchapters.has(question.subchapter));
+  const testQuestions = questions.filter((question) => testSubchapters.has(question.subchapter));
+  const defaultSetFirstIds = new Set(setNames.map((setName) => sets[setName][0]?.id).filter(Boolean));
+  const distinctFirstIndex = testQuestions.findIndex((question) => !defaultSetFirstIds.has(question.id));
+  if (distinctFirstIndex > 0) {
+    [testQuestions[0], testQuestions[distinctFirstIndex]] = [testQuestions[distinctFirstIndex], testQuestions[0]];
+  }
+  sets.testQuestions = testQuestions;
   return sets;
 }
 
