@@ -167,6 +167,8 @@ function buildDefaultSets(questions) {
     }
   });
 
+  const testSubchapters = new Set(['Similar to Test Questions', 'Past Test Questions']);
+  sets.testQuestions = questions.filter((question) => testSubchapters.has(question.subchapter));
   return sets;
 }
 
@@ -756,6 +758,10 @@ function updateModuleButtons() {
   document.querySelectorAll('.module-btn').forEach((button) => {
     button.classList.toggle('active', button.dataset.module === state.moduleId);
   });
+  const testQuestionsButton = document.querySelector('[data-set="testQuestions"]');
+  if (testQuestionsButton) {
+    testQuestionsButton.classList.toggle('hidden', state.moduleId !== 'human-resources-quality-management');
+  }
 }
 
 function applyFilters() {
@@ -775,7 +781,7 @@ function applyFilters() {
 }
 
 function loadDefaultSet(setName) {
-  const normalized = ['A', 'B', 'C', 'all'].includes(setName) ? setName : 'A';
+  const normalized = ['A', 'B', 'C', 'all', 'testQuestions'].includes(setName) ? setName : 'A';
   state.activeSet = normalized;
   state.filteredQuestions = [...(state.defaultSets[normalized] || [])];
   state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };

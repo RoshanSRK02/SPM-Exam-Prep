@@ -10164,6 +10164,1406 @@
             ],
             "hint": "Prevents dissatisfaction.",
             "explanation": "Salary, company policy, supervision, and working conditions are hygiene factors."
+        },
+        {
+            "id": "TEST-511",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which of the following ISO 9001:2015 Quality Management Systems requirement/clause does 'Nonconformity and corrective action' fall?",
+            "options": [
+                "Context of the organisation",
+                "Operation",
+                "Performance evaluation",
+                "Improvement"
+            ],
+            "answers": [
+                "Improvement"
+            ],
+            "hint": "Think of the clause dealing with continual improvement and corrective actions.",
+            "explanation": "ISO 9001:2015 places nonconformity and corrective action under Clause 10: Improvement."
+        },
+        {
+            "id": "TEST-512",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The expectancy theory of motivation includes how many variables or relationships?",
+            "options": [
+                "Two",
+                "Three",
+                "Four",
+                "Five"
+            ],
+            "answers": [
+                "Three"
+            ],
+            "hint": "Expectancy, instrumentality, and valence.",
+            "explanation": "Vroom's expectancy theory is based on three key relationships: expectancy, instrumentality, and valence."
+        },
+        {
+            "id": "TEST-513",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The second of Crosby's four absolutes of quality management is:",
+            "options": [
+                "Creating a system based on prevention",
+                "Defining quality as conformance to requirements",
+                "Using a Cost of Quality measurement system",
+                "Setting a Zero Defects performance standard"
+            ],
+            "answers": [
+                "Defining quality as conformance to requirements"
+            ],
+            "hint": "Crosby starts by defining quality.",
+            "explanation": "Crosby's second absolute states that quality is defined as conformance to requirements."
+        },
+        {
+            "id": "TEST-514",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Quality is a predictable degree of uniformity and dependability, at low cost and suited to the market according to:",
+            "options": [
+                "Feigenbaum",
+                "Juran",
+                "Deming",
+                "Crosby"
+            ],
+            "answers": [
+                "Deming"
+            ],
+            "hint": "Think of the quality guru associated with continuous improvement.",
+            "explanation": "This well-known definition of quality was given by W. Edwards Deming."
+        },
+        {
+            "id": "TEST-515",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Based on which quality concept would one conclude that the higher the price, the higher the quality?",
+            "options": [
+                "Producer based",
+                "User based",
+                "Manufacturing based",
+                "Product based"
+            ],
+            "answers": [
+                "Product based"
+            ],
+            "hint": "This approach links quality to measurable product attributes.",
+            "explanation": "The product-based approach assumes quality is related to the quantity or level of desirable product attributes."
+        },
+        {
+            "id": "TEST-516",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The second part of Juran's Trilogy of managerial processes is:",
+            "options": [
+                "Control",
+                "Improvement",
+                "Planning",
+                "Design"
+            ],
+            "answers": [
+                "Control"
+            ],
+            "hint": "The trilogy follows planning, control, and improvement.",
+            "explanation": "Juran's Trilogy consists of Quality Planning, Quality Control, and Quality Improvement."
+        },
+        {
+            "id": "TEST-517",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The quality guru who argued that 'doing it right the first time' is less expensive than the costs of detecting and correcting nonconformities is:",
+            "options": [
+                "Shewhart",
+                "Deming",
+                "Crosby",
+                "Juran"
+            ],
+            "answers": [
+                "Crosby"
+            ],
+            "hint": "Associated with Zero Defects.",
+            "explanation": "Philip Crosby promoted the principle of doing things right the first time and emphasized prevention over inspection."
+        },
+        {
+            "id": "TEST-518",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which of the following ISO 9001:2015 Quality Management Systems requirement/clause does 'Actions to address risks and opportunities' fall?",
+            "options": [
+                "Planning",
+                "Operation",
+                "Performance evaluation",
+                "Improvement"
+            ],
+            "answers": [
+                "Planning"
+            ],
+            "hint": "Risk-based thinking is addressed before implementation.",
+            "explanation": "Actions to address risks and opportunities are covered under Clause 6: Planning."
+        },
+        {
+            "id": "TEST-519",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Quality has been defined as 'fitness for purpose' by:",
+            "options": [
+                "Feigenbaum",
+                "Crosby",
+                "Juran",
+                "Deming"
+            ],
+            "answers": [
+                "Juran"
+            ],
+            "hint": "This quality guru developed the Quality Trilogy.",
+            "explanation": "Juran defined quality as fitness for use or fitness for purpose."
+        },
+        {
+            "id": "TEST-520",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Fayol referred to the line of authority from top management to the lowest ranks as the:",
+            "options": [
+                "Scalar chain",
+                "Chain of command",
+                "Chain of authority",
+                "Chain of direction"
+            ],
+            "answers": [
+                "Scalar chain"
+            ],
+            "hint": "One of Fayol's fourteen principles.",
+            "explanation": "The scalar chain is the formal line of authority running from the highest to the lowest level in an organization."
+        },
+        {
+            "id": "TEST-521",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which of the following ISO 9001:2015 Quality Management Systems requirement/clause does 'Competence' fall?",
+            "options": [
+                "Leadership",
+                "Support",
+                "Performance evaluation",
+                "Improvement"
+            ],
+            "answers": [
+                "Support"
+            ],
+            "hint": "Think about resources and people.",
+            "explanation": "Competence is addressed under Clause 7: Support."
+        },
+        {
+            "id": "TEST-522",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The third of Crosby's fourteen steps to quality improvement is:",
+            "options": [
+                "Supervisor training",
+                "Management commitment",
+                "Quality measurement",
+                "Set up a quality improvement team"
+            ],
+            "answers": [
+                "Quality measurement"
+            ],
+            "hint": "Measurement comes after establishing commitment and the team.",
+            "explanation": "In Crosby's fourteen-step quality improvement process, the third step is Quality Measurement."
+        },
+        {
+            "id": "TEST-523",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Who developed a theory of authority structures and relations based on an ideal organization referred to as a bureaucracy?",
+            "options": [
+                "Weber",
+                "Fayol",
+                "Taylor",
+                "Mintzberg"
+            ],
+            "answers": [
+                "Weber"
+            ],
+            "hint": "Associated with bureaucratic management theory.",
+            "explanation": "Max Weber developed the bureaucratic model of organization based on authority structures and rules."
+        },
+        {
+            "id": "TEST-524",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The third of Crosby's four absolutes of quality management is:",
+            "options": [
+                "Creating a system based on prevention",
+                "Defining quality as conformance to requirements",
+                "Using a Cost of Quality measurement system",
+                "Setting a Zero Defects performance standard"
+            ],
+            "answers": [
+                "Using a Cost of Quality measurement system"
+            ],
+            "hint": "This absolute focuses on measuring the price of nonconformance.",
+            "explanation": "Crosby's third absolute states that the measurement of quality is the cost of quality."
+        },
+        {
+            "id": "TEST-525",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which of the following ISO 9001:2015 Quality Management Systems requirement/clause does 'Quality management system and its processes' fall?",
+            "options": [
+                "Context of the organisation",
+                "Support",
+                "Operation",
+                "Improvement"
+            ],
+            "answers": [
+                "Context of the organisation"
+            ],
+            "hint": "This requirement establishes the foundations of the QMS.",
+            "explanation": "The quality management system and its processes are covered under Clause 4: Context of the Organisation."
+        },
+        {
+            "id": "TEST-526",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The most significant value proposition for Quality 4.0 initiatives is to:",
+            "options": [
+                "Augment (or improve upon) human intelligence",
+                "Increase the speed and quality of decision making",
+                "Improve transparency, traceability, and auditability",
+                "Anticipate changes, reveal biases, and adapt to new circumstances and knowledge"
+            ],
+            "answers": [
+                "Increase the speed and quality of decision making"
+            ],
+            "hint": "Think about the primary business value created by Quality 4.0 technologies.",
+            "explanation": "Quality 4.0 leverages digital technologies to enhance decision-making speed and effectiveness throughout the organization."
+        },
+        {
+            "id": "TEST-527",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "hard",
+            "examPriority": "high",
+            "question": "The study conducted by Boston Consulting Group (BCG) and ASQ regarding Quality 4.0 focused primarily on the manufacturing sector in the U.S. and:",
+            "options": [
+                "Japan",
+                "Germany",
+                "Canada",
+                "None of the above"
+            ],
+            "answers": [
+                "Germany"
+            ],
+            "hint": "Think of the country strongly associated with Industry 4.0.",
+            "explanation": "The BCG-ASQ Quality 4.0 study primarily examined manufacturing organizations in the United States and Germany."
+        },
+        {
+            "id": "TEST-528",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which of the following ISO 9001:2015 Quality Management Systems requirement/clause does 'Policy' fall?",
+            "options": [
+                "Context of the organisation",
+                "Leadership",
+                "Planning",
+                "Improvement"
+            ],
+            "answers": [
+                "Leadership"
+            ],
+            "hint": "Top management is responsible for establishing it.",
+            "explanation": "The Quality Policy is covered under Clause 5 (Leadership) of ISO 9001:2015."
+        },
+        {
+            "id": "TEST-529",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The second of Crosby's fourteen steps to quality improvement is:",
+            "options": [
+                "Supervisor training",
+                "Management commitment",
+                "Quality measurement",
+                "Set up a quality improvement team"
+            ],
+            "answers": [
+                "Set up a quality improvement team"
+            ],
+            "hint": "It comes immediately after management commitment.",
+            "explanation": "Crosby's second step is to establish a quality improvement team responsible for driving quality initiatives."
+        },
+        {
+            "id": "TEST-530",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which of the following ISO 9001:2015 Quality Management Systems requirement/clause does 'Determining the scope of the quality management system' fall?",
+            "options": [
+                "Context of the organisation",
+                "Planning",
+                "Operation",
+                "Performance evaluation"
+            ],
+            "answers": [
+                "Context of the organisation"
+            ],
+            "hint": "The organization must first define the boundaries of its QMS.",
+            "explanation": "Determining the scope of the quality management system is a requirement under Clause 4: Context of the Organisation."
+        },
+        {
+            "id": "TEST-531",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Fayol referred to the promotion of team spirit that builds harmony and unity within the organization as:",
+            "options": [
+                "Team building",
+                "Unity of command",
+                "Unity of direction",
+                "Esprit de corps"
+            ],
+            "answers": [
+                "Esprit de corps"
+            ],
+            "hint": "One of Fayol's fourteen principles emphasizes morale and unity.",
+            "explanation": "Esprit de corps refers to fostering harmony, loyalty, and team spirit among employees."
+        },
+        {
+            "id": "TEST-532",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which of the following best describes the reliability dimension of quality?",
+            "options": [
+                "Consistency of performance over time",
+                "Past performance and other tangibles",
+                "Useful life, includes repair",
+                "Meeting specifications"
+            ],
+            "answers": [
+                "Consistency of performance over time"
+            ],
+            "hint": "Reliability concerns dependable operation.",
+            "explanation": "Reliability refers to the probability that a product performs consistently and dependably over a specified period."
+        },
+        {
+            "id": "TEST-533",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "The most important historical contribution to the field of organisational behaviour emerged from the:",
+            "options": [
+                "Albion studies",
+                "Greenwich studies",
+                "Hawthorne studies",
+                "Bromwich studies"
+            ],
+            "answers": [
+                "Hawthorne studies"
+            ],
+            "hint": "These studies highlighted the importance of social factors at work.",
+            "explanation": "The Hawthorne Studies significantly influenced the development of organizational behaviour by emphasizing human relations and employee attitudes."
+        },
+        {
+            "id": "TEST-534",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Quality is conformance to requirements, not elegance, according to:",
+            "options": [
+                "Feigenbaum",
+                "Juran",
+                "Deming",
+                "Crosby"
+            ],
+            "answers": [
+                "Crosby"
+            ],
+            "hint": "Associated with Zero Defects and prevention.",
+            "explanation": "Philip Crosby defined quality as conformance to requirements rather than excellence or elegance."
+        },
+        {
+            "id": "TEST-535",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "In 'The Wealth of Nations', who argued that organizations and society benefit economically from the division of labour?",
+            "options": [
+                "Henry Ford",
+                "John Spencer",
+                "Adam Smith",
+                "Elton Mayo"
+            ],
+            "answers": [
+                "Adam Smith"
+            ],
+            "hint": "Known as the father of modern economics.",
+            "explanation": "Adam Smith demonstrated the economic advantages of specialization and division of labour in The Wealth of Nations."
+        },
+        {
+            "id": "TEST-536",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which human resource option includes 'attrition'?",
+            "options": [
+                "Decruitment",
+                "Recruitment",
+                "Training",
+                "Performance evaluation"
+            ],
+            "answers": [
+                "Decruitment"
+            ],
+            "hint": "It involves reducing the workforce rather than increasing it.",
+            "explanation": "Attrition is a decruitment technique in which workforce size decreases through resignations, retirements, or natural turnover."
+        },
+        {
+            "id": "TEST-537",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "According to which view of conflict is some conflict essential in a group?",
+            "options": [
+                "Dysfunctional",
+                "Traditional",
+                "Human relations",
+                "Interactionist"
+            ],
+            "answers": [
+                "Interactionist"
+            ],
+            "hint": "This view encourages a minimum level of conflict.",
+            "explanation": "The interactionist view argues that some conflict is necessary to keep groups creative, self-critical, and effective."
+        },
+        {
+            "id": "TEST-538",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The fourth of Crosby's four absolutes of quality management is:",
+            "options": [
+                "Creating a system based on prevention",
+                "Defining quality as conformance to requirements",
+                "Using a Cost of Quality measurement system",
+                "Setting a Zero Defects performance standard"
+            ],
+            "answers": [
+                "Setting a Zero Defects performance standard"
+            ],
+            "hint": "This absolute focuses on the expected performance standard.",
+            "explanation": "Crosby's fourth absolute states that the performance standard is Zero Defects."
+        },
+        {
+            "id": "TEST-539",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The 'Dark Triad' traits include:",
+            "options": [
+                "Machiavellianism but does not include narcissism",
+                "Extraversion",
+                "Psychopathy but does not include Machiavellianism",
+                "Narcissism"
+            ],
+            "answers": [
+                "Narcissism"
+            ],
+            "hint": "The Dark Triad consists of three negative personality traits.",
+            "explanation": "The Dark Triad includes Machiavellianism, Narcissism, and Psychopathy."
+        },
+        {
+            "id": "TEST-540",
+            "lecture": 0,
+            "subchapter": "Past Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "The Motivation-Hygiene Theory was proposed by:",
+            "options": [
+                "Maslow",
+                "McGregor",
+                "Herzberg",
+                "Adams"
+            ],
+            "answers": [
+                "Herzberg"
+            ],
+            "hint": "Also known as the Two-Factor Theory.",
+            "explanation": "Frederick Herzberg developed the Motivation-Hygiene (Two-Factor) Theory."
+        },
+        {
+            "id": "TEST-541",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which ISO 9001:2015 clause would 'Internal Audit' fall?",
+            "options": [
+                "Leadership",
+                "Planning",
+                "Performance Evaluation",
+                "Improvement"
+            ],
+            "answers": [
+                "Performance Evaluation"
+            ],
+            "hint": "Think about monitoring and reviewing the QMS.",
+            "explanation": "Internal audits are part of Clause 9, Performance Evaluation."
+        },
+        {
+            "id": "TEST-542",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Under which ISO 9001:2015 clause does 'Documented Information' fall?",
+            "options": [
+                "Support",
+                "Operation",
+                "Leadership",
+                "Improvement"
+            ],
+            "answers": [
+                "Support"
+            ],
+            "hint": "Think resources and information.",
+            "explanation": "Documented information is included in Clause 7: Support."
+        },
+        {
+            "id": "TEST-543",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "The first of Crosby's four absolutes of quality management is:",
+            "options": [
+                "Quality is conformance to requirements",
+                "Zero Defects",
+                "Cost of Quality",
+                "Prevention"
+            ],
+            "answers": [
+                "Quality is conformance to requirements"
+            ],
+            "hint": "It defines quality.",
+            "explanation": "Crosby's first absolute defines quality as conformance to requirements."
+        },
+        {
+            "id": "TEST-544",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "According to Crosby, the system of quality is:",
+            "options": [
+                "Inspection",
+                "Appraisal",
+                "Prevention",
+                "Correction"
+            ],
+            "answers": [
+                "Prevention"
+            ],
+            "hint": "Focus on avoiding defects.",
+            "explanation": "Crosby argued that prevention is the system of quality."
+        },
+        {
+            "id": "TEST-545",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The final element of Juran's Trilogy is:",
+            "options": [
+                "Planning",
+                "Control",
+                "Improvement",
+                "Inspection"
+            ],
+            "answers": [
+                "Improvement"
+            ],
+            "hint": "It follows planning and control.",
+            "explanation": "Juran's Trilogy consists of Planning, Control and Improvement."
+        },
+        {
+            "id": "TEST-546",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Who introduced the concept of the Quality Trilogy?",
+            "options": [
+                "Deming",
+                "Juran",
+                "Crosby",
+                "Feigenbaum"
+            ],
+            "answers": [
+                "Juran"
+            ],
+            "hint": "Associated with fitness for use.",
+            "explanation": "Juran proposed the Quality Trilogy."
+        },
+        {
+            "id": "TEST-547",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Which quality guru is most associated with the PDCA Cycle?",
+            "options": [
+                "Deming",
+                "Crosby",
+                "Juran",
+                "Feigenbaum"
+            ],
+            "answers": [
+                "Deming"
+            ],
+            "hint": "Plan-Do-Check-Act.",
+            "explanation": "Deming popularized the PDCA cycle for continuous improvement."
+        },
+        {
+            "id": "TEST-548",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Who coined the term 'Total Quality Control'?",
+            "options": [
+                "Deming",
+                "Juran",
+                "Feigenbaum",
+                "Crosby"
+            ],
+            "answers": [
+                "Feigenbaum"
+            ],
+            "hint": "Think company-wide quality.",
+            "explanation": "Feigenbaum is known for Total Quality Control."
+        },
+        {
+            "id": "TEST-549",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "According to Fayol, every employee should receive orders from only one superior. This principle is known as:",
+            "options": [
+                "Unity of Command",
+                "Unity of Direction",
+                "Scalar Chain",
+                "Equity"
+            ],
+            "answers": [
+                "Unity of Command"
+            ],
+            "hint": "One boss only.",
+            "explanation": "Unity of Command states that employees should report to only one manager."
+        },
+        {
+            "id": "TEST-550",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The Fayol principle that states activities with a common objective should have one plan and one leader is:",
+            "options": [
+                "Unity of Direction",
+                "Unity of Command",
+                "Discipline",
+                "Order"
+            ],
+            "answers": [
+                "Unity of Direction"
+            ],
+            "hint": "One objective, one plan.",
+            "explanation": "Unity of Direction requires a single plan and leader for similar activities."
+        },
+        {
+            "id": "TEST-551",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "The bureaucratic management approach was developed by:",
+            "options": [
+                "Taylor",
+                "Mayo",
+                "Weber",
+                "Mintzberg"
+            ],
+            "answers": [
+                "Weber"
+            ],
+            "hint": "Rational authority structures.",
+            "explanation": "Max Weber developed bureaucracy theory."
+        },
+        {
+            "id": "TEST-552",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which dimension of quality refers to the useful life of a product?",
+            "options": [
+                "Reliability",
+                "Durability",
+                "Performance",
+                "Aesthetics"
+            ],
+            "answers": [
+                "Durability"
+            ],
+            "hint": "Think longevity.",
+            "explanation": "Durability refers to a product's useful operating life."
+        },
+        {
+            "id": "TEST-553",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Quality 4.0 primarily combines quality management with:",
+            "options": [
+                "Artificial Intelligence and Digital Technologies",
+                "Paper-based systems",
+                "Traditional inspection",
+                "Manual record keeping"
+            ],
+            "answers": [
+                "Artificial Intelligence and Digital Technologies"
+            ],
+            "hint": "Industry 4.0 concepts.",
+            "explanation": "Quality 4.0 integrates quality management with digital and intelligent technologies."
+        },
+        {
+            "id": "TEST-554",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "In Expectancy Theory, valence refers to:",
+            "options": [
+                "The attractiveness of a reward",
+                "Effort exerted",
+                "Performance appraisal",
+                "Job satisfaction"
+            ],
+            "answers": [
+                "The attractiveness of a reward"
+            ],
+            "hint": "Value of the outcome.",
+            "explanation": "Valence is the value an individual places on expected rewards."
+        },
+        {
+            "id": "TEST-555",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which conflict view argues that all conflict should be avoided?",
+            "options": [
+                "Interactionist",
+                "Traditional",
+                "Human Relations",
+                "Contemporary"
+            ],
+            "answers": [
+                "Traditional"
+            ],
+            "hint": "The earliest view of conflict.",
+            "explanation": "The traditional view considers conflict harmful and something to be eliminated."
+        },
+        {
+            "id": "TEST-556",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Which theory was proposed by Herzberg?",
+            "options": [
+                "Hierarchy of Needs",
+                "Two-Factor Theory",
+                "Theory X and Theory Y",
+                "Expectancy Theory"
+            ],
+            "answers": [
+                "Two-Factor Theory"
+            ],
+            "hint": "Also called Motivation-Hygiene Theory.",
+            "explanation": "Herzberg developed the Two-Factor (Motivation-Hygiene) Theory."
+        },
+        {
+            "id": "TEST-557",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Natural workforce reduction through retirement and resignation is known as:",
+            "options": [
+                "Recruitment",
+                "Attrition",
+                "Selection",
+                "Induction"
+            ],
+            "answers": [
+                "Attrition"
+            ],
+            "hint": "Frequently used in decruitment.",
+            "explanation": "Attrition refers to reducing employee numbers through natural turnover."
+        },
+        {
+            "id": "TEST-558",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which of the following is NOT part of the Dark Triad?",
+            "options": [
+                "Narcissism",
+                "Psychopathy",
+                "Machiavellianism",
+                "Conscientiousness"
+            ],
+            "answers": [
+                "Conscientiousness"
+            ],
+            "hint": "One is a Big Five trait.",
+            "explanation": "The Dark Triad includes Machiavellianism, Narcissism and Psychopathy."
+        },
+        {
+            "id": "TEST-559",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "hard",
+            "examPriority": "high",
+            "question": "Which clause of ISO 9001:2015 focuses on customer satisfaction monitoring?",
+            "options": [
+                "Performance Evaluation",
+                "Operation",
+                "Planning",
+                "Support"
+            ],
+            "answers": [
+                "Performance Evaluation"
+            ],
+            "hint": "Think measurement and feedback.",
+            "explanation": "Customer satisfaction monitoring is part of Clause 9: Performance Evaluation."
+        },
+        {
+            "id": "TEST-560",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "hard",
+            "examPriority": "high",
+            "question": "According to Crosby, the measurement of quality is:",
+            "options": [
+                "Customer satisfaction",
+                "Cost of Quality",
+                "Product durability",
+                "Inspection results"
+            ],
+            "answers": [
+                "Cost of Quality"
+            ],
+            "hint": "One of Crosby's Four Absolutes.",
+            "explanation": "Crosby stated that the measurement of quality is the Cost of Quality."
+        },
+        {
+            "id": "TEST-561",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which ISO 9001:2015 clause focuses on top management commitment to the Quality Management System?",
+            "options": [
+                "Leadership",
+                "Planning",
+                "Support",
+                "Operation"
+            ],
+            "answers": [
+                "Leadership"
+            ],
+            "hint": "This clause emphasizes the role of top management.",
+            "explanation": "Clause 5 (Leadership) requires top management to demonstrate leadership and commitment."
+        },
+        {
+            "id": "TEST-562",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "According to Deming, quality should be improved primarily through:",
+            "options": [
+                "Inspection",
+                "Continuous improvement",
+                "Punishment",
+                "Advertising"
+            ],
+            "answers": [
+                "Continuous improvement"
+            ],
+            "hint": "Think of PDCA.",
+            "explanation": "Deming emphasized continuous improvement through systematic processes."
+        },
+        {
+            "id": "TEST-563",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Who defined quality as 'fitness for use'?",
+            "options": [
+                "Deming",
+                "Juran",
+                "Crosby",
+                "Weber"
+            ],
+            "answers": [
+                "Juran"
+            ],
+            "hint": "Associated with the Quality Trilogy.",
+            "explanation": "Juran defined quality as fitness for use."
+        },
+        {
+            "id": "TEST-564",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which of Crosby's absolutes states that the performance standard is:",
+            "options": [
+                "Inspection",
+                "Continuous improvement",
+                "Zero Defects",
+                "Customer delight"
+            ],
+            "answers": [
+                "Zero Defects"
+            ],
+            "hint": "The fourth absolute.",
+            "explanation": "Crosby advocated Zero Defects as the performance standard."
+        },
+        {
+            "id": "TEST-565",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "The first stage of Juran's Trilogy is:",
+            "options": [
+                "Improvement",
+                "Control",
+                "Planning",
+                "Inspection"
+            ],
+            "answers": [
+                "Planning"
+            ],
+            "hint": "It comes before control.",
+            "explanation": "Juran's Trilogy begins with Quality Planning."
+        },
+        {
+            "id": "TEST-566",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Which Fayol principle emphasizes fairness and kindness by managers?",
+            "options": [
+                "Equity",
+                "Order",
+                "Authority",
+                "Initiative"
+            ],
+            "answers": [
+                "Equity"
+            ],
+            "hint": "Treat employees fairly.",
+            "explanation": "Equity requires managers to be fair and impartial."
+        },
+        {
+            "id": "TEST-567",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "According to Weber, authority derived from laws and rules is known as:",
+            "options": [
+                "Traditional authority",
+                "Charismatic authority",
+                "Legal-rational authority",
+                "Personal authority"
+            ],
+            "answers": [
+                "Legal-rational authority"
+            ],
+            "hint": "The foundation of bureaucracy.",
+            "explanation": "Weber's bureaucracy is based on legal-rational authority."
+        },
+        {
+            "id": "TEST-568",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which quality dimension refers to the appearance, feel, taste or smell of a product?",
+            "options": [
+                "Features",
+                "Performance",
+                "Aesthetics",
+                "Reliability"
+            ],
+            "answers": [
+                "Aesthetics"
+            ],
+            "hint": "This dimension appeals to the senses.",
+            "explanation": "Aesthetics relates to sensory characteristics of a product."
+        },
+        {
+            "id": "TEST-569",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which quality dimension measures the primary operating characteristics of a product?",
+            "options": [
+                "Durability",
+                "Performance",
+                "Conformance",
+                "Serviceability"
+            ],
+            "answers": [
+                "Performance"
+            ],
+            "hint": "Core functioning of the product.",
+            "explanation": "Performance refers to a product's primary operating characteristics."
+        },
+        {
+            "id": "TEST-570",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "The Hawthorne Studies were conducted under the leadership of:",
+            "options": [
+                "Frederick Taylor",
+                "Elton Mayo",
+                "Weber",
+                "Fayol"
+            ],
+            "answers": [
+                "Elton Mayo"
+            ],
+            "hint": "Associated with the Human Relations Movement.",
+            "explanation": "Elton Mayo is strongly associated with the Hawthorne Studies."
+        },
+        {
+            "id": "TEST-571",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which conflict view accepts conflict as a natural occurrence in groups?",
+            "options": [
+                "Traditional",
+                "Human Relations",
+                "Authoritarian",
+                "Classical"
+            ],
+            "answers": [
+                "Human Relations"
+            ],
+            "hint": "It neither encourages nor eliminates conflict.",
+            "explanation": "The Human Relations view accepts conflict as inevitable and natural."
+        },
+        {
+            "id": "TEST-572",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "The Dark Triad consists of Machiavellianism, Psychopathy and:",
+            "options": [
+                "Agreeableness",
+                "Extroversion",
+                "Narcissism",
+                "Conscientiousness"
+            ],
+            "answers": [
+                "Narcissism"
+            ],
+            "hint": "A trait involving excessive self-focus.",
+            "explanation": "Narcissism is one of the three Dark Triad personality traits."
+        },
+        {
+            "id": "TEST-573",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "In Expectancy Theory, instrumentality refers to the belief that:",
+            "options": [
+                "Effort leads to performance",
+                "Performance leads to rewards",
+                "Rewards have value",
+                "Work is enjoyable"
+            ],
+            "answers": [
+                "Performance leads to rewards"
+            ],
+            "hint": "Performance → Outcome.",
+            "explanation": "Instrumentality is the perceived relationship between performance and rewards."
+        },
+        {
+            "id": "TEST-574",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Maslow's highest level of needs is:",
+            "options": [
+                "Esteem",
+                "Belongingness",
+                "Self-actualization",
+                "Safety"
+            ],
+            "answers": [
+                "Self-actualization"
+            ],
+            "hint": "Achieving full potential.",
+            "explanation": "Self-actualization sits at the top of Maslow's hierarchy."
+        },
+        {
+            "id": "TEST-575",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "easy",
+            "examPriority": "high",
+            "question": "Who proposed Theory X and Theory Y?",
+            "options": [
+                "Herzberg",
+                "Maslow",
+                "McGregor",
+                "Adams"
+            ],
+            "answers": [
+                "McGregor"
+            ],
+            "hint": "Examiner already tested motivation theories.",
+            "explanation": "Douglas McGregor developed Theory X and Theory Y."
+        },
+        {
+            "id": "TEST-576",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "Which activity is part of the recruitment process?",
+            "options": [
+                "Attracting applicants",
+                "Employee retirement",
+                "Job evaluation",
+                "Disciplinary action"
+            ],
+            "answers": [
+                "Attracting applicants"
+            ],
+            "hint": "Occurs before selection.",
+            "explanation": "Recruitment is the process of attracting qualified candidates."
+        },
+        {
+            "id": "TEST-577",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "hard",
+            "examPriority": "high",
+            "question": "Under ISO 9001:2015, management review is part of which clause?",
+            "options": [
+                "Performance Evaluation",
+                "Support",
+                "Planning",
+                "Operation"
+            ],
+            "answers": [
+                "Performance Evaluation"
+            ],
+            "hint": "Think assessment and monitoring.",
+            "explanation": "Management review is addressed under Clause 9, Performance Evaluation."
+        },
+        {
+            "id": "TEST-578",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "hard",
+            "examPriority": "high",
+            "question": "Which ISO 9001:2015 clause covers resources, competence, awareness and communication?",
+            "options": [
+                "Support",
+                "Leadership",
+                "Operation",
+                "Improvement"
+            ],
+            "answers": [
+                "Support"
+            ],
+            "hint": "Clause 7.",
+            "explanation": "Resources, competence, awareness and communication are covered under the Support clause."
+        },
+        {
+            "id": "TEST-579",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "hard",
+            "examPriority": "high",
+            "question": "The primary objective of Quality 4.0 is to:",
+            "options": [
+                "Increase paperwork",
+                "Replace managers",
+                "Enhance quality performance through digital technologies",
+                "Reduce customer involvement"
+            ],
+            "answers": [
+                "Enhance quality performance through digital technologies"
+            ],
+            "hint": "Think Industry 4.0.",
+            "explanation": "Quality 4.0 integrates advanced digital technologies to improve quality management."
+        },
+        {
+            "id": "TEST-580",
+            "lecture": 0,
+            "subchapter": "Similar to Test Questions",
+            "type": "single-select",
+            "difficulty": "medium",
+            "examPriority": "high",
+            "question": "According to Crosby, the cost incurred because work was not done right the first time is called:",
+            "options": [
+                "Cost of Conformance",
+                "Cost of Quality",
+                "Cost of Nonconformance",
+                "Inspection Cost"
+            ],
+            "answers": [
+                "Cost of Nonconformance"
+            ],
+            "hint": "Think defects and rework.",
+            "explanation": "Cost of Nonconformance refers to costs arising from failures, defects and corrective actions."
         }
     ]
 }
