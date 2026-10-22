@@ -6,7 +6,7 @@ This repository is a Progressive Web App (PWA) for MCQ revision. It loads a sele
 ## High-level architecture
 - Frontend UI: static HTML, CSS, and vanilla JavaScript
 - Data layer: module-specific JSON files loaded through `fetch()`
-- Runtime state: in-memory state object plus browser `localStorage`
+- Runtime state: in-memory state object plus browser `localStorage`, with optional anonymous Supabase sync
 - Offline support: service worker caches the app shell and key assets
 - UX model: module selection, revision mode, exam mode, filters, default sets, bookmarks, incorrect list, and historical results
 
@@ -31,6 +31,16 @@ This repository is a Progressive Web App (PWA) for MCQ revision. It loads a sele
 - Caches the app shell for offline support
 - Cleans outdated caches on activation
 - Intercepts GET requests and serves cached responses when available
+- Reports its active cache version to the page for the footer display
+
+### `sync-config.js`
+- Holds the public Supabase Edge Function URL used for progress sync; the service worker checks for its latest copy online and keeps a cached offline fallback
+- Leave empty to keep using this device's local storage without cross-device sync
+
+### `supabase/`
+- `schema.sql` creates the progress table with row-level security enabled and no browser-role access
+- `functions/progress-sync/index.ts` hashes the private sync code and uses the server-side service-role key to read/write progress
+- `config.toml` permits unauthenticated function calls; access is instead protected by a randomly generated 192-bit sync code
 
 ### `manifest.json`
 - PWA metadata for installability and app appearance
@@ -79,18 +89,19 @@ The app uses a central `state` object with these main buckets:
 - captures all main DOM elements into the `elements` registry
 - restores saved theme, selected module, mode, filters, history, performance, bookmarks, and incorrect data
 - applies the stored theme immediately
-- clears stale service worker caches and registers the service worker
+- registers the service worker and displays its active version in the footer
 - sets up the browser install prompt UI
-- loads the selected module bank, populates filters, loads the default Set A, and binds UI events
+- loads the selected module bank, restores the chosen set and active quiz if available, and binds UI events
+- merges remote progress when sync is configured, then starts a default quiz only when there is no resumable session
 - renders the summary and initial question view
 
 ### Module selection flow
 The UI now includes a dedicated module chooser before the filter toolbar. It uses the `MODULES` registry defined in `app.js` to map module IDs to labels and file paths. Switching modules triggers a reload of the corresponding dataset, repopulates filters, and rebuilds the default A/B/C sets.
 
 ### PWA install flow
-`PwaManager` handles installation and cache refresh:
-- `clearStaleServiceWorker()` unregisters previous service workers and drops old caches
-- `registerServiceWorker()` registers `./service-worker.js` when the browser supports service workers
+`PwaManager` handles installation and cache version reporting:
+- `registerServiceWorker()` registers `./service-worker.js` without unregistering the current worker or clearing its caches
+- The active worker responds to a version message, and the footer renders the reported version
 - `setupInstallPrompt()` listens for `beforeinstallprompt` and reveals the install button when available
 
 ### Quiz session lifecycle
@@ -116,7 +127,21 @@ The live app flow is session-based and managed by `QuizEngine` and `ReviewEngine
 
 ### Storage and persistence
 - `StorageManager` reads/writes keys in `localStorage`
-- Persistent state includes theme, mode, filters, result history, performance, bookmarks, and incorrect questions
+- Persistent state includes theme, mode, filters, every completed result, performance, bookmarks, incorrect questions, and the active quiz with shuffled question order, answers, and position
+- Existing local data is retained and merged when a sync code is connected
+- Quiz-result history is merged by result ID; lecture performance is recomputed from a shared baseline plus per-quiz performance deltas
+- Bookmark changes are recorded as timestamped events so removals also sync across devices
+
+### Anonymous cross-device sync setup
+Cross-device sync is inactive until the Supabase project is configured and the Edge Function is deployed:
+1. Create a Supabase project and run `supabase/schema.sql` in its SQL Editor.
+2. Link the repository to that project with the Supabase CLI and deploy `supabase/functions/progress-sync` with `supabase functions deploy progress-sync --no-verify-jwt`. Ensure the function has the project's `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` environment variables; never put the service-role key in the frontend.
+3. Set `window.REVISION_SYNC_FUNCTION_URL` in `sync-config.js` to `https://<project-ref>.supabase.co/functions/v1/progress-sync`, then deploy the static app.
+4. In the app, create a sync code on one device, copy it, and enter the same code on each other device. The code is a bearer secret: anyone who obtains it can access that progress.
+
+The browser never receives the service-role key. Only the Edge Function can access the table; the stored sync identifier is a SHA-256 hash of the code. Cloud updates use optimistic version checks and retry when another device writes concurrently. Local changes remain saved when offline and sync on reconnect.
+
+For later releases, update `CACHE_NAME` in `service-worker.js` so the footer continues to identify the active worker release.
 
 ### Quiz and results handling
 The application is structured around session-based quiz rendering and result recording.

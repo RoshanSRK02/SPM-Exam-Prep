@@ -163,8 +163,29 @@
           </section>
         </aside>
       </main>
+
+      <footer class="app-footer">
+        <section class="card sync-panel" aria-label="Cross-device progress sync">
+          <h2>Sync progress across devices</h2>
+          <p>Use the same private sync code on each device. Anyone with this code can access your progress.</p>
+          <div class="sync-controls">
+            <label class="sync-code-field" for="syncCodeInput">
+              Sync code
+              <input id="syncCodeInput" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste a sync code from another device" />
+            </label>
+            <div class="sync-buttons">
+              <button id="createSyncCodeBtn" class="secondary-btn" type="button">Create sync code</button>
+              <button id="connectSyncBtn" class="primary-btn" type="button">Connect / sync</button>
+              <button id="copySyncCodeBtn" class="ghost-btn hidden" type="button">Copy code</button>
+            </div>
+          </div>
+          <p id="syncStatus" class="sync-status" role="status">Cross-device sync is not configured.</p>
+        </section>
+        <p id="appVersion" class="app-version">Service worker version: checking…</p>
+      </footer>
     </div>
 
+    <script src="sync-config.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

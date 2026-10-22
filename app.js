@@ -19,6 +19,8 @@ const STORAGE_KEYS = {
   performance: 'revision-mcq-performance',
   bookmarks: 'revision-mcq-bookmarks',
   incorrect: 'revision-mcq-incorrect',
+  progress: 'revision-mcq-progress',
+  syncCode: 'revision-mcq-sync-code',
 };
 
 const state = {
@@ -28,6 +30,8 @@ const state = {
   currentSession: null,
   currentQuestionIndex: 0,
   activeSet: 'A',
+  syncCode: '',
+  progressUpdatedAt: 0,
   totalQuestions: 0,
   moduleId: 'managing-software-projects',
   moduleLabel: MODULES['managing-software-projects'].label,
@@ -42,6 +46,9 @@ const state = {
     subchapter: 'all',
   },
   performance: {},
+  performanceBase: null,
+  bookmarkBase: null,
+  bookmarkEvents: [],
   history: [],
   bookmarks: [],
   incorrect: [],
@@ -179,7 +186,7 @@ function buildDefaultSets(questions) {
 }
 
 const DataLayer = {
-  async loadQuestionBank(moduleId = state.moduleId) {
+  async loadQuestionBank(moduleId = state.moduleId, preserveFilters = false) {
     const moduleKey = MODULES[moduleId] ? moduleId : 'managing-software-projects';
     const moduleConfig = MODULES[moduleKey];
     const response = await fetch(moduleConfig.file, { cache: 'force-cache' });
@@ -194,7 +201,9 @@ const DataLayer = {
     state.defaultSets = buildDefaultSets(questions);
     state.defaultSets.all = [...questions];
     state.filteredQuestions = [...(state.defaultSets.A || [])];
-    state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
+    if (!preserveFilters) {
+      state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
+    }
     FilterEngine.reset();
     return questions;
   },
@@ -241,9 +250,85 @@ const StorageManager = {
     state.performance = StorageManager.loadObject(STORAGE_KEYS.performance, {});
     state.bookmarks = StorageManager.loadObject(STORAGE_KEYS.bookmarks, []);
     state.incorrect = StorageManager.loadObject(STORAGE_KEYS.incorrect, []);
+    state.syncCode = StorageManager.loadObject(STORAGE_KEYS.syncCode, '');
+    const savedProgress = StorageManager.loadObject(STORAGE_KEYS.progress, null);
+    if (savedProgress) {
+      StorageManager.applyProgress(savedProgress, false);
+    }
+    if (!state.performanceBase) state.performanceBase = structuredClone(state.performance);
+    if (!state.bookmarkBase) state.bookmarkBase = [...state.bookmarks];
   },
 
-  saveState() {
+  getProgressSnapshot() {
+    const session = state.currentSession ? {
+      ...state.currentSession,
+      answerMap: Object.fromEntries(Object.entries(state.currentSession.answerMap || {}).map(([questionId, answers]) => [
+        questionId,
+        { selected: [...answers], showAnswer: Boolean(answers.showAnswer) },
+      ])),
+    } : null;
+    return {
+      theme: state.theme,
+      moduleId: state.moduleId,
+      mode: state.mode,
+      filters: state.filters,
+      history: state.history,
+      performance: state.performance,
+      performanceBase: state.performanceBase,
+      bookmarks: state.bookmarks,
+      bookmarkBase: state.bookmarkBase,
+      bookmarkEvents: state.bookmarkEvents,
+      incorrect: state.incorrect,
+      activeSet: state.activeSet,
+      currentSession: session,
+      currentQuestionIndex: state.currentQuestionIndex,
+      updatedAt: state.progressUpdatedAt,
+    };
+  },
+
+  applyProgress(progress, persist = true) {
+    if (!progress || typeof progress !== 'object') return;
+    state.progressUpdatedAt = Number(progress.updatedAt) || 0;
+    if (MODULES[progress.moduleId]) state.moduleId = progress.moduleId;
+    if (['light', 'dark'].includes(progress.theme)) state.theme = progress.theme;
+    if (['revision', 'exam'].includes(progress.mode)) state.mode = progress.mode;
+    if (progress.filters && typeof progress.filters === 'object') {
+      state.filters = { ...state.filters, ...progress.filters };
+    }
+    if (Array.isArray(progress.history)) state.history = progress.history;
+    if (progress.performance && typeof progress.performance === 'object') state.performance = progress.performance;
+    state.performanceBase = progress.performanceBase && typeof progress.performanceBase === 'object'
+      ? progress.performanceBase
+      : structuredClone(state.performance);
+    if (Array.isArray(progress.bookmarks)) state.bookmarks = progress.bookmarks;
+    state.bookmarkBase = Array.isArray(progress.bookmarkBase)
+      ? progress.bookmarkBase
+      : [...state.bookmarks];
+    state.bookmarkEvents = Array.isArray(progress.bookmarkEvents) ? progress.bookmarkEvents : [];
+    if (Array.isArray(progress.incorrect)) state.incorrect = progress.incorrect;
+    if (['A', 'B', 'C', 'all', 'testQuestions'].includes(progress.activeSet)) state.activeSet = progress.activeSet;
+    if (progress.currentSession && Array.isArray(progress.currentSession.questions)) {
+      const answerMap = {};
+      Object.entries(progress.currentSession.answerMap || {}).forEach(([questionId, answerData]) => {
+        const selected = Array.isArray(answerData) ? answerData : answerData?.selected;
+        answerMap[questionId] = Array.isArray(selected) ? [...selected] : [];
+        answerMap[questionId].showAnswer = Boolean(answerData?.showAnswer);
+      });
+      state.currentSession = { ...progress.currentSession, answerMap };
+      state.currentQuestionIndex = Math.max(
+        0,
+        Math.min(Number(progress.currentQuestionIndex) || 0, state.currentSession.questions.length - 1)
+      );
+    } else {
+      state.currentSession = null;
+      state.currentQuestionIndex = 0;
+    }
+    state.moduleLabel = MODULES[state.moduleId].label;
+    if (persist) StorageManager.saveState(false);
+  },
+
+  saveState(sync = true) {
+    state.progressUpdatedAt = Date.now();
     StorageManager.saveObject(STORAGE_KEYS.theme, state.theme);
     StorageManager.saveObject(STORAGE_KEYS.module, state.moduleId);
     StorageManager.saveObject(STORAGE_KEYS.mode, state.mode);
@@ -252,6 +337,233 @@ const StorageManager = {
     StorageManager.saveObject(STORAGE_KEYS.performance, state.performance);
     StorageManager.saveObject(STORAGE_KEYS.bookmarks, state.bookmarks);
     StorageManager.saveObject(STORAGE_KEYS.incorrect, state.incorrect);
+    StorageManager.saveObject(STORAGE_KEYS.progress, StorageManager.getProgressSnapshot());
+    StorageManager.saveObject(STORAGE_KEYS.syncCode, state.syncCode);
+    if (sync) {
+      SyncManager.revision += 1;
+      SyncManager.queueSync();
+    }
+  },
+};
+
+const SyncManager = {
+  timer: null,
+  syncing: false,
+  revision: 0,
+
+  functionUrl() {
+    return String(window.REVISION_SYNC_FUNCTION_URL || '').trim().replace(/\/+$/, '');
+  },
+
+  setStatus(message, isError = false) {
+    if (!elements.syncStatus) return;
+    elements.syncStatus.textContent = message;
+    elements.syncStatus.classList.toggle('error', isError);
+  },
+
+  async request(action, progress, expectedVersion) {
+    const response = await fetch(this.functionUrl(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action,
+        syncCode: state.syncCode,
+        ...(progress ? { progress, expectedVersion } : {}),
+      }),
+    });
+    let payload;
+    try {
+      payload = await response.json();
+    } catch {
+      throw new Error(`Sync service returned an invalid response (${response.status}).`);
+    }
+    if (!response.ok) {
+      const error = new Error(payload.error || `Sync service request failed (${response.status}).`);
+      error.status = response.status;
+      throw error;
+    }
+    return payload;
+  },
+
+  mergeProgress(local, remote) {
+    if (!remote) return local;
+    const newer = Number(remote.updatedAt) > Number(local.updatedAt) ? remote : local;
+    const historyById = new Map();
+    [...(remote.history || []), ...(local.history || [])].forEach((item) => {
+      const id = item.id || `${item.title}|${item.date}|${item.score}`;
+      historyById.set(id, item);
+    });
+    const history = [...historyById.values()]
+      .sort((left, right) => (Number(right.createdAt) || 0) - (Number(left.createdAt) || 0));
+    const performanceBase = { ...(remote.performanceBase || remote.performance || {}) };
+    Object.entries(local.performanceBase || local.performance || {}).forEach(([lecture, stats]) => {
+      const remoteStats = performanceBase[lecture] || {};
+      performanceBase[lecture] = {
+        attempted: Math.max(Number(remoteStats.attempted) || 0, Number(stats.attempted) || 0),
+        correct: Math.max(Number(remoteStats.correct) || 0, Number(stats.correct) || 0),
+      };
+    });
+    const performance = structuredClone(performanceBase);
+    history.forEach((item) => {
+      Object.entries(item.lecturePerformance || {}).forEach(([lecture, stats]) => {
+        if (!performance[lecture]) performance[lecture] = { attempted: 0, correct: 0 };
+        performance[lecture].attempted += Number(stats.attempted) || 0;
+        performance[lecture].correct += Number(stats.correct) || 0;
+      });
+    });
+    const bookmarkBase = [...new Set([...(remote.bookmarkBase || remote.bookmarks || []), ...(local.bookmarkBase || local.bookmarks || [])])];
+    const bookmarkEventsById = new Map();
+    [...(remote.bookmarkEvents || []), ...(local.bookmarkEvents || [])].forEach((event) => {
+      bookmarkEventsById.set(event.id, event);
+    });
+    const bookmarkEvents = [...bookmarkEventsById.values()];
+    const latestBookmarkEvents = new Map();
+    bookmarkEvents.forEach((event) => {
+      const current = latestBookmarkEvents.get(event.questionId);
+      if (!current || event.changedAt > current.changedAt
+        || (event.changedAt === current.changedAt && event.id > current.id)) {
+        latestBookmarkEvents.set(event.questionId, event);
+      }
+    });
+    const bookmarks = new Set(bookmarkBase);
+    latestBookmarkEvents.forEach((event, questionId) => {
+      if (event.bookmarked) bookmarks.add(questionId);
+      else bookmarks.delete(questionId);
+    });
+    return {
+      ...newer,
+      history,
+      performance,
+      performanceBase,
+      bookmarks: [...bookmarks],
+      bookmarkBase,
+      bookmarkEvents,
+      incorrect: [...new Set([...(remote.incorrect || []), ...(local.incorrect || [])])],
+      updatedAt: Date.now(),
+    };
+  },
+
+  queueSync() {
+    if (!state.syncCode || !this.functionUrl()) return;
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.syncNow(), 1200);
+  },
+
+  async connect(code) {
+    if (!this.functionUrl()) {
+      this.setStatus('Sync is not configured yet. Configure the Supabase function URL first.', true);
+      return;
+    }
+    const normalizedCode = String(code || '').trim().toLowerCase();
+    if (!/^[a-f0-9]{48}$/.test(normalizedCode)) {
+      this.setStatus('Enter a valid 48-character sync code.', true);
+      return;
+    }
+    state.syncCode = normalizedCode;
+    StorageManager.saveObject(STORAGE_KEYS.syncCode, state.syncCode);
+    elements.syncCodeInput.value = normalizedCode;
+    elements.syncCodeInput.type = 'password';
+    elements.createSyncCodeBtn.disabled = true;
+    elements.copySyncCodeBtn.classList.remove('hidden');
+    await this.syncNow();
+  },
+
+  async syncNow() {
+    if (this.syncing || !state.syncCode || !this.functionUrl()) return false;
+    this.syncing = true;
+    this.setStatus('Syncing progress…');
+    let syncedRevision = this.revision;
+    try {
+      let merged = null;
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const revision = this.revision;
+        const local = StorageManager.getProgressSnapshot();
+        const response = await this.request('read');
+        merged = this.mergeProgress(local, response.progress);
+        try {
+          await this.request('write', merged, response.version);
+        } catch (error) {
+          if (error.status === 409) continue;
+          throw error;
+        }
+        if (revision === this.revision) {
+          syncedRevision = revision;
+          break;
+        }
+        merged = null;
+      }
+      if (!merged) throw new Error('Progress kept changing during sync. Please try again.');
+      if (MODULES[merged.moduleId] && merged.moduleId !== state.moduleId) {
+        await DataLayer.loadQuestionBank(merged.moduleId, true);
+      }
+      StorageManager.applyProgress(merged, false);
+      StorageManager.saveState(false);
+      setTheme(state.theme, false);
+      populateFilters();
+      updateModuleButtons();
+      updateModeButtons();
+      state.filteredQuestions = FilterEngine.apply(state.allQuestions, state.filters);
+      if (state.currentSession) {
+        elements.quizActions.classList.remove('hidden');
+      } else {
+        elements.quizActions.classList.add('hidden');
+      }
+      ResultsEngine.renderAll();
+      renderSummaryStats();
+      ReviewEngine.renderQuestion();
+      document.querySelectorAll('.set-btn').forEach((button) => {
+        button.classList.toggle('active', button.dataset.set === state.activeSet);
+      });
+      this.setStatus(`Progress synced at ${new Date().toLocaleTimeString()}.`);
+      return true;
+    } catch (error) {
+      console.error('Progress sync failed:', error);
+      this.setStatus(`Sync failed: ${error.message}`, true);
+      return false;
+    } finally {
+      this.syncing = false;
+      if (this.revision !== syncedRevision) this.queueSync();
+    }
+  },
+
+  setup() {
+    const configured = Boolean(this.functionUrl());
+    elements.createSyncCodeBtn.disabled = !configured || Boolean(state.syncCode);
+    elements.connectSyncBtn.disabled = !configured;
+    elements.syncCodeInput.value = state.syncCode;
+    elements.copySyncCodeBtn.classList.toggle('hidden', !state.syncCode);
+    if (!configured) {
+      this.setStatus('Cross-device sync is not configured. Set the Supabase function URL in sync-config.js.');
+    } else if (state.syncCode) {
+      this.setStatus('Sync code saved on this device. Syncing…');
+    } else {
+      this.setStatus('Create a sync code here or enter one from another device.');
+    }
+
+    elements.createSyncCodeBtn.addEventListener('click', async () => {
+      if (state.syncCode) return;
+      const bytes = crypto.getRandomValues(new Uint8Array(24));
+      const code = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+      elements.syncCodeInput.value = code;
+      elements.syncCodeInput.type = 'text';
+      elements.copySyncCodeBtn.classList.remove('hidden');
+      elements.createSyncCodeBtn.disabled = true;
+      await this.connect(code);
+    });
+    elements.connectSyncBtn.addEventListener('click', () => this.connect(elements.syncCodeInput.value));
+    elements.copySyncCodeBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(state.syncCode);
+        this.setStatus('Sync code copied. Keep it private and enter it on your other device.');
+      } catch (error) {
+        console.error('Unable to copy sync code:', error);
+        this.setStatus('Copy was blocked by the browser. Select and copy the code from the field.', true);
+        elements.syncCodeInput.type = 'text';
+        elements.syncCodeInput.focus();
+        elements.syncCodeInput.select();
+      }
+    });
+    window.addEventListener('online', () => this.syncNow());
   },
 };
 
@@ -466,6 +778,7 @@ const ReviewEngine = {
     state.currentSession.answerMap[question.id] = selected;
     state.currentSession.answerMap[question.id].showAnswer = true;
     ReviewEngine.renderQuestion();
+    StorageManager.saveState();
   },
 
   renderQuestion() {
@@ -573,6 +886,7 @@ const QuizEngine = {
       mode,
     };
     state.currentQuestionIndex = 0;
+    StorageManager.saveState();
   },
 
   handleOptionSelection(question, optionValue) {
@@ -597,6 +911,7 @@ const QuizEngine = {
     }
 
     ReviewEngine.renderQuestion();
+    StorageManager.saveState();
   },
 
   toggleBookmark(questionId) {
@@ -604,6 +919,12 @@ const QuizEngine = {
     state.bookmarks = state.bookmarks.includes(questionId)
       ? state.bookmarks.filter((id) => id !== questionId)
       : [...new Set([...state.bookmarks, questionId])];
+    state.bookmarkEvents.push({
+      id: crypto.randomUUID(),
+      questionId,
+      bookmarked: state.bookmarks.includes(questionId),
+      changedAt: Date.now(),
+    });
     StorageManager.saveState();
     ResultsEngine.renderBookmarks();
     ReviewEngine.renderQuestion();
@@ -639,6 +960,7 @@ const QuizEngine = {
     if (state.currentQuestionIndex < state.currentSession.questions.length - 1) {
       state.currentQuestionIndex += 1;
       ReviewEngine.renderQuestion();
+      StorageManager.saveState();
       QuizEngine.scrollQuestionIntoView();
     }
   },
@@ -648,6 +970,7 @@ const QuizEngine = {
     if (state.currentQuestionIndex > 0) {
       state.currentQuestionIndex -= 1;
       ReviewEngine.renderQuestion();
+      StorageManager.saveState();
       QuizEngine.scrollQuestionIntoView();
     }
   },
@@ -659,11 +982,12 @@ const QuizEngine = {
   },
 
   submitQuiz() {
-    if (!state.currentSession) return;
+    if (!state.currentSession || state.currentSession.completed) return;
 
     const session = state.currentSession;
     session.completed = true;
     let correct = 0;
+    const lecturePerformance = {};
 
     session.questions.forEach((question) => {
       const selected = session.answerMap[question.id] || [];
@@ -672,19 +996,26 @@ const QuizEngine = {
 
       const lectureKey = String(question.lecture || 'Unassigned');
       if (!state.performance[lectureKey]) state.performance[lectureKey] = { attempted: 0, correct: 0 };
+      if (!lecturePerformance[lectureKey]) lecturePerformance[lectureKey] = { attempted: 0, correct: 0 };
       state.performance[lectureKey].attempted += 1;
-      if (isCorrect) state.performance[lectureKey].correct += 1;
+      lecturePerformance[lectureKey].attempted += 1;
+      if (isCorrect) {
+        state.performance[lectureKey].correct += 1;
+        lecturePerformance[lectureKey].correct += 1;
+      }
 
       if (!isCorrect) state.incorrect = [...new Set([...state.incorrect, question.id])];
     });
 
     const percentage = session.questions.length ? Math.round((correct / session.questions.length) * 100) : 0;
     state.history.unshift({
+      id: crypto.randomUUID(),
+      createdAt: Date.now(),
       title: session.questions.length === 20 ? 'Daily Quiz' : `${state.activeSet === 'all' ? 'All questions' : `Set ${state.activeSet}`}`,
       date: new Date().toLocaleDateString(undefined, { dateStyle: 'medium' }),
       score: percentage,
+      lecturePerformance,
     });
-    state.history = state.history.slice(0, 6);
     StorageManager.saveState();
     ResultsEngine.renderAll();
     ReviewEngine.renderQuestion();
@@ -693,20 +1024,47 @@ const QuizEngine = {
 };
 
 const PwaManager = {
-  clearStaleServiceWorker() {
-    if (!('serviceWorker' in navigator)) return;
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      registrations.forEach((registration) => registration.unregister());
-    }).catch(() => {});
-    caches.keys().then((keys) => {
-      keys.forEach((key) => caches.delete(key));
-    }).catch(() => {});
-  },
-
   registerServiceWorker() {
-    if (!('serviceWorker' in navigator)) return;
+    if (!('serviceWorker' in navigator)) {
+      elements.appVersion.textContent = 'Service worker version: unavailable';
+      return;
+    }
+    const showVersion = (worker) => {
+      if (!worker) return;
+      const channel = new MessageChannel();
+      const timeout = setTimeout(() => {
+        channel.port1.close();
+        elements.appVersion.textContent = 'Service worker version: unavailable';
+      }, 3000);
+      channel.port1.onmessage = (event) => {
+        clearTimeout(timeout);
+        channel.port1.close();
+        const version = String(event.data?.version || '').replace(/^revision-mcq-/, '');
+        elements.appVersion.textContent = version
+          ? `Service worker version: ${version}`
+          : 'Service worker version: unavailable';
+      };
+      worker.postMessage({ type: 'GET_VERSION' }, [channel.port2]);
+    };
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      showVersion(navigator.serviceWorker.controller);
+    });
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+      navigator.serviceWorker.register('./service-worker.js')
+        .then((registration) => {
+          showVersion(registration.active || navigator.serviceWorker.controller);
+          registration.addEventListener('updatefound', () => {
+            const installing = registration.installing;
+            if (!installing) return;
+            installing.addEventListener('statechange', () => {
+              if (installing.state === 'activated') showVersion(installing);
+            });
+          });
+        })
+        .catch((error) => {
+          console.error('Service worker registration failed:', error);
+          elements.appVersion.textContent = 'Service worker version: registration failed';
+        });
     });
   },
 
@@ -729,13 +1087,13 @@ const PwaManager = {
   },
 };
 
-function setTheme(themeName) {
+function setTheme(themeName, persist = true) {
   document.body.classList.toggle('dark', themeName === 'dark');
   state.theme = themeName;
   if (elements.themeToggle) {
     elements.themeToggle.textContent = themeName === 'dark' ? 'Light mode' : 'Dark mode';
   }
-  StorageManager.saveState();
+  if (persist) StorageManager.saveState();
 }
 
 function populateFilters() {
@@ -770,6 +1128,12 @@ function updateModuleButtons() {
   }
 }
 
+function updateModeButtons() {
+  document.querySelectorAll('.mode-btn').forEach((button) => {
+    button.classList.toggle('active', button.dataset.mode === state.mode);
+  });
+}
+
 function applyFilters() {
   state.filters = {
     search: elements.questionSearch.value.trim(),
@@ -786,16 +1150,18 @@ function applyFilters() {
   StorageManager.saveState();
 }
 
-function loadDefaultSet(setName) {
+function loadDefaultSet(setName, startQuiz = true, preserveFilters = false) {
   const normalized = ['A', 'B', 'C', 'all', 'testQuestions'].includes(setName) ? setName : 'A';
   state.activeSet = normalized;
   state.filteredQuestions = [...(state.defaultSets[normalized] || [])];
-  state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
+  if (!preserveFilters) {
+    state.filters = { search: '', lecture: 'all', difficulty: 'all', type: 'all', priority: 'all', subchapter: 'all' };
+  }
   populateFilters();
   document.querySelectorAll('.set-btn').forEach((button) => button.classList.toggle('active', button.dataset.set === normalized));
   renderSummaryStats();
   ResultsEngine.renderAll();
-  QuizEngine.startQuiz(state.filteredQuestions);
+  if (startQuiz) QuizEngine.startQuiz(state.filteredQuestions);
 }
 
 function bindEvents() {
@@ -890,6 +1256,7 @@ function bindEvents() {
     QuizEngine.createSession([question], state.mode);
     elements.quizActions.classList.remove('hidden');
     ReviewEngine.renderQuestion();
+    StorageManager.saveState();
   });
 }
 
@@ -922,25 +1289,41 @@ function captureElements() {
   elements.bookmarkList = document.getElementById('bookmarkList');
   elements.incorrectList = document.getElementById('incorrectList');
   elements.resultHistory = document.getElementById('resultHistory');
+  elements.appVersion = document.getElementById('appVersion');
+  elements.syncCodeInput = document.getElementById('syncCodeInput');
+  elements.syncStatus = document.getElementById('syncStatus');
+  elements.createSyncCodeBtn = document.getElementById('createSyncCodeBtn');
+  elements.connectSyncBtn = document.getElementById('connectSyncBtn');
+  elements.copySyncCodeBtn = document.getElementById('copySyncCodeBtn');
 }
 
 async function initializeApp() {
   captureElements();
   StorageManager.loadState();
-  setTheme(state.theme);
-  PwaManager.clearStaleServiceWorker();
+  setTheme(state.theme, false);
   PwaManager.registerServiceWorker();
   PwaManager.setupInstallPrompt();
 
   try {
     updateModuleButtons();
-    await DataLayer.loadQuestionBank(state.moduleId);
-    populateFilters();
-    loadDefaultSet('A');
+    updateModeButtons();
+    await DataLayer.loadQuestionBank(state.moduleId, true);
+    loadDefaultSet(state.activeSet, false, true);
+    state.filteredQuestions = FilterEngine.apply(state.allQuestions, state.filters);
+    if (state.currentSession) {
+      elements.quizActions.classList.remove('hidden');
+    }
     bindEvents();
     ResultsEngine.renderAll();
     renderSummaryStats();
     ReviewEngine.renderQuestion();
+    SyncManager.setup();
+    const synced = await SyncManager.syncNow();
+    const syncCouldNotLoad = Boolean(state.syncCode && SyncManager.functionUrl() && !synced);
+    if (!state.currentSession && !syncCouldNotLoad) {
+      QuizEngine.startQuiz(state.filteredQuestions);
+      ReviewEngine.renderQuestion();
+    }
   } catch (error) {
     elements.questionCard.innerHTML = `<div class="empty-state">Could not load question bank: ${escapeHtml(error.message || 'Unknown error')}</div>`;
   }

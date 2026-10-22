@@ -1,9 +1,10 @@
-const CACHE_NAME = 'revision-mcq-v3.9';
+const CACHE_NAME = 'revision-mcq-v4.0';
 const OFFLINE_ASSETS = [
   './',
   './index.html',
   './styles.css',
   './app.js',
+  './sync-config.js',
   './question_bank.json',
   './HR questions.json',
   './manifest.json',
@@ -28,6 +29,21 @@ self.addEventListener('fetch', (event) => {
   const requestUrl = new URL(event.request.url);
   if (requestUrl.origin !== self.location.origin) return;
 
+  if (requestUrl.pathname.endsWith('/sync-config.js')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || Response.error()))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
@@ -43,4 +59,10 @@ self.addEventListener('fetch', (event) => {
         });
     })
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'GET_VERSION') {
+    event.ports[0]?.postMessage({ version: CACHE_NAME });
+  }
 });

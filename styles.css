@@ -95,6 +95,16 @@ button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 .result-history, .compact-list { list-style: none; margin: 0; padding: 0; }
 .compact-item button { flex: 1; text-align: left; background: transparent; border: none; color: var(--text); padding: 0; cursor: pointer; }
 .empty-state { color: var(--muted); padding: 12px 0; }
+.app-footer { margin-top: 24px; }
+.sync-panel { padding: 16px; }
+.sync-panel h2 { margin: 0 0 8px; font-size: 1.1rem; }
+.sync-panel p { color: var(--muted); margin: 0 0 14px; }
+.sync-controls { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.sync-code-field { display: flex; flex: 1 1 280px; flex-direction: column; gap: 8px; font-weight: 600; color: var(--muted); }
+.sync-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.sync-status { margin: 12px 0 0 !important; font-size: 0.9rem; }
+.sync-status.error { color: var(--danger); }
+.app-version { margin: 12px 0 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
 .lecture-chart { display: grid; gap: 10px; }
 .chart-row { display: flex; align-items: center; gap: 10px; }
 .chart-label { min-width: 42px; font-size: 0.82rem; color: var(--muted); }
