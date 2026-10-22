@@ -10220,10 +10220,10 @@
                 "Setting a Zero Defects performance standard"
             ],
             "answers": [
-                "Defining quality as conformance to requirements"
+                "Creating a system based on prevention"
             ],
-            "hint": "Crosby starts by defining quality.",
-            "explanation": "Crosby's second absolute states that quality is defined as conformance to requirements."
+            "hint": "Crosby's second absolute focuses on preventing defects before they occur.",
+            "explanation": "Crosby's second absolute states that the system of quality is prevention. Quality should be achieved by preventing errors rather than detecting and correcting them later."
         },
         {
             "id": "TEST-514",
@@ -10440,10 +10440,10 @@
                 "Setting a Zero Defects performance standard"
             ],
             "answers": [
-                "Using a Cost of Quality measurement system"
+                "Setting a Zero Defects performance standard"
             ],
-            "hint": "This absolute focuses on measuring the price of nonconformance.",
-            "explanation": "Crosby's third absolute states that the measurement of quality is the cost of quality."
+            "hint": "The third absolute establishes the expected performance level for quality.",
+            "explanation": "Crosby's third absolute states that the performance standard for quality is Zero Defects. The aim is to do things right the first time rather than accepting errors as inevitable."
         },
         {
             "id": "TEST-525",
@@ -10480,10 +10480,10 @@
                 "Anticipate changes, reveal biases, and adapt to new circumstances and knowledge"
             ],
             "answers": [
-                "Increase the speed and quality of decision making"
+                "Augment (or improve upon) human intelligence"
             ],
-            "hint": "Think about the primary business value created by Quality 4.0 technologies.",
-            "explanation": "Quality 4.0 leverages digital technologies to enhance decision-making speed and effectiveness throughout the organization."
+            "hint": "Quality 4.0 uses technology to enhance rather than replace human capabilities.",
+            "explanation": "The primary value proposition of Quality 4.0 is to augment human intelligence by using digital technologies, analytics, and artificial intelligence to support better quality-related decisions and performance."
         },
         {
             "id": "TEST-527",
@@ -10720,10 +10720,10 @@
                 "Setting a Zero Defects performance standard"
             ],
             "answers": [
-                "Setting a Zero Defects performance standard"
+                "Using a Cost of Quality measurement system"
             ],
-            "hint": "This absolute focuses on the expected performance standard.",
-            "explanation": "Crosby's fourth absolute states that the performance standard is Zero Defects."
+            "hint": "The final absolute concerns how quality performance is measured.",
+            "explanation": "Crosby's fourth absolute states that quality should be measured by the Price or Cost of Nonconformance, which evaluates the cost resulting from defects and failures."
         },
         {
             "id": "TEST-539",
