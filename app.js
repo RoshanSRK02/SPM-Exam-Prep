@@ -340,6 +340,7 @@ const StorageManager = {
     StorageManager.saveObject(STORAGE_KEYS.progress, StorageManager.getProgressSnapshot());
     StorageManager.saveObject(STORAGE_KEYS.syncCode, state.syncCode);
     if (sync) {
+      if (state.currentSession) SyncManager.localSessionChanged = true;
       SyncManager.revision += 1;
       SyncManager.queueSync();
     }
@@ -350,6 +351,7 @@ const SyncManager = {
   timer: null,
   syncing: false,
   revision: 0,
+  localSessionChanged: false,
 
   functionUrl() {
     return String(window.REVISION_SYNC_FUNCTION_URL || '').trim().replace(/\/+$/, '');
@@ -480,6 +482,11 @@ const SyncManager = {
         const local = StorageManager.getProgressSnapshot();
         const response = await this.request('read');
         merged = this.mergeProgress(local, response.progress);
+        if (this.localSessionChanged && local.currentSession) {
+          merged.moduleId = local.moduleId;
+          merged.currentSession = local.currentSession;
+          merged.currentQuestionIndex = local.currentQuestionIndex;
+        }
         try {
           await this.request('write', merged, response.version);
         } catch (error) {
@@ -503,6 +510,7 @@ const SyncManager = {
       }
       StorageManager.applyProgress(merged, false);
       StorageManager.saveState(false);
+      this.localSessionChanged = false;
       setTheme(state.theme, false);
       populateFilters();
       updateModuleButtons();
