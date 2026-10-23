@@ -494,7 +494,12 @@ const SyncManager = {
       }
       if (!merged) throw new Error('Progress kept changing during sync. Please try again.');
       if (MODULES[merged.moduleId] && merged.moduleId !== state.moduleId) {
+        const localModuleId = state.moduleId;
         await DataLayer.loadQuestionBank(merged.moduleId, true);
+        if (this.revision !== syncedRevision) {
+          await DataLayer.loadQuestionBank(localModuleId, true);
+          return false;
+        }
       }
       StorageManager.applyProgress(merged, false);
       StorageManager.saveState(false);
