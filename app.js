@@ -486,6 +486,10 @@ const SyncManager = {
           merged.moduleId = local.moduleId;
           merged.currentSession = local.currentSession;
           merged.currentQuestionIndex = local.currentQuestionIndex;
+        } else if (response.progress?.currentSession) {
+          merged.moduleId = response.progress.moduleId;
+          merged.currentSession = response.progress.currentSession;
+          merged.currentQuestionIndex = response.progress.currentQuestionIndex;
         }
         try {
           await this.request('write', merged, response.version);
